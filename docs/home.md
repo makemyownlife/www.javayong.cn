@@ -1,7 +1,7 @@
 ---
 icon: creative
-title: JavaGuide（Java学习&面试指南）
----
+title: 勇哥Java实战
+----------------------------
 
 ::: tip 友情提示
 

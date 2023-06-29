@@ -5,9 +5,9 @@ import theme from "./theme.js";
 export default defineUserConfig({
   dest: "./dist",
 
-  title: "JavaGuide(Java面试 + 学习指南)",
+  title: "勇哥Java实战",
   description:
-    "「Java学习指北 + Java面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，复习 Java 知识点，首选 JavaGuide！  ",
+    "Java基础知识、缓存、消息队列、分库分表等高并发解决方案！",
   lang: "zh-CN",
 
   head: [
