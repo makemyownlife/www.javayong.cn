@@ -35,5 +35,5 @@ footer: |-
 
 最新更新会第一时间同步在公众号，推荐关注！另外，公众号上有很多干货不会同步在线阅读网站。
 
-![](https://itcourage.cn/pics/zhihu/gongzhonghao.webp)
+![](https://javayong.cn/pics/zhihu/gongzhonghao.webp)
 
