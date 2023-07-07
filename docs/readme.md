@@ -13,6 +13,7 @@ actions:
     link: /about-the-author/zhishixingqiu-two-years.md
     type: default
 footer: |-
+  <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> | 主题: <a href="https://vuepress-theme-hope.github.io/v2/" target="_blank">VuePress Theme Hope</a>
 ---
 
 ## 关于作者

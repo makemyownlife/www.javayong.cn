@@ -18,7 +18,7 @@ export default hopeTheme({
     url: "https://javaguide.cn/article/",
   },
 
-  repo: "https://github.com/Snailclimb/JavaGuide",
+  repo: "https://github.com/makemyownlife/www.javayong.cn",
   docsDir: "docs",
   // 纯净模式：https://theme-hope.vuejs.press/zh/guide/interface/pure.html
   pure: true,
@@ -26,7 +26,7 @@ export default hopeTheme({
   navbar,
   sidebar,
   footer:
-    '<a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2020015769号-1</a>',
+    '<a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a>',
   displayFooter: true,
 
   pageInfo: [
