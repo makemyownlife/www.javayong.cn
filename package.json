@@ -4,7 +4,7 @@
   "private": true,
   "description": "javayong",
   "license": "MIT",
-  "author": "Guide",
+  "author": "zhangyong",
   "scripts": {
     "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
