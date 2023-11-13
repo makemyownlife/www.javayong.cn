@@ -13,7 +13,7 @@ actions:
     link: 'https://public.zsxq.com/groups/15528815218812.html'
     type: default
 footer: |-
-  <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> 
+          <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> 
 ---
 
 ## 关于作者

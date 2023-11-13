@@ -7,18 +7,18 @@ import sidebar from "./sidebar/index.js";
 const __dirname = getDirname(import.meta.url);
 
 export default hopeTheme({
-  hostname: "https://javaguide.cn/",
+  hostname: "https://javayong.cn/",
   logo: "/logo.png",
   favicon: "/favicon.ico",
 
   iconAssets: "//at.alicdn.com/t/c/font_2922463_kweia6fbo9.css",
 
   author: {
-    name: "Guide",
+    name: "勇哥",
     url: "https://javaguide.cn/article/",
   },
 
-  repo: "https://github.com/makemyownlife/www.javayong.cn",
+  repo: "https://github.com/makemyownlife",
   docsDir: "docs",
   // 纯净模式：https://theme-hope.vuejs.press/zh/guide/interface/pure.html
   pure: true,
