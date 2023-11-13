@@ -4,7 +4,7 @@ icon: home
 title: 勇哥Java实战
 heroImage: /logo.png
 heroText: 勇哥Java实战
-tagline: Java基础知识、缓存、消息队列、分库分表等高并发解决方案！
+tagline: Java 基础知识、高并发解决方案三剑客（缓存、消息队列、分库分表）、实战项目讲解。
 actions:
   - text: 开始阅读
     link: /home/
@@ -13,7 +13,7 @@ actions:
     link: 'https://public.zsxq.com/groups/15528815218812.html'
     type: default
 footer: |-
-  <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> | 主题: <a href="https://vuepress-theme-hope.github.io/v2/" target="_blank">VuePress Theme Hope</a>
+  <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> 
 ---
 
 ## 关于作者
