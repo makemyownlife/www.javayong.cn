@@ -4,7 +4,7 @@ icon: home
 title: 勇哥Java实战
 heroImage: /logo.png
 heroText: 勇哥Java实战
-tagline: Java 基础知识、高并发三剑客（缓存、消息队列、分库分表）、实战项目讲解。
+tagline: Java 基础、高并发三剑客（缓存、消息队列、分库分表）、实战项目讲解。
 actions:
   - text: 开始阅读
     link: /home/
@@ -19,13 +19,11 @@ footer: |-
 ## 关于作者
 
 
-## 勇哥作品
+## 作品 PDF 
 
 - [RocketMQ4.X 设计精要](https://mp.weixin.qq.com/s/aMSa5GKloN2_lsMHRpGiOA)
 
 ## 公众号
-
-最新更新会第一时间同步在公众号，推荐关注！另外，公众号上有很多干货不会同步在线阅读网站。
 
 ![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)
 
