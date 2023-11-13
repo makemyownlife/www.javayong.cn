@@ -7,7 +7,7 @@ export default defineUserConfig({
 
   title: "勇哥Java实战",
   description:
-    "Java基础知识、缓存、消息队列、分库分表等高并发解决方案！",
+    "Java 基础知识、高并发解决方案三剑客（缓存、消息队列、分库分表）、实战项目讲解。",
   lang: "zh-CN",
 
   head: [
