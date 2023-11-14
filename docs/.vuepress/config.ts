@@ -13,7 +13,7 @@ export default defineUserConfig({
   head: [
     // meta
     ["meta", { name: "robots", content: "all" }],
-    ["meta", { name: "author", content: "Guide" }],
+    ["meta", { name: "author", content: "Courage" }],
     [
       "meta",
       {
@@ -28,7 +28,7 @@ export default defineUserConfig({
       {
         name: "keywords",
         content:
-          "Java基础, 多线程, JVM, 虚拟机, 数据库, MySQL, Spring, Redis, MyBatis, 系统设计, 分布式, RPC, 高可用, 高并发",
+          "Java基础, 多线程, JVM, 消息队列, 虚拟机, 数据库, MySQL, Spring, Redis, MyBatis, 系统设计, 分布式, RPC, 高可用, 高并发",
       },
     ],
     ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],

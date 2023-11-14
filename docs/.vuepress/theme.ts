@@ -15,7 +15,7 @@ export default hopeTheme({
 
   author: {
     name: "勇哥",
-    url: "https://javaguide.cn/article/",
+    url: "https://javayong.cn/article/",
   },
 
   repo: "https://github.com/makemyownlife",
