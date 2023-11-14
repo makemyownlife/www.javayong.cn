@@ -19,11 +19,13 @@ footer: |-
 ## 关于作者
 
 
-## 作品 PDF 
+## 作品PDF
 
 - [RocketMQ4.X 设计精要](https://mp.weixin.qq.com/s/aMSa5GKloN2_lsMHRpGiOA)
 
 ## 公众号
+
+最新更新会第一时间同步在公众号，推荐关注！另外，公众号上有很多干货不会同步在线阅读网站。
 
 ![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)
 
