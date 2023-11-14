@@ -16,12 +16,16 @@ footer: |-
           <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> 
 ---
 
-## 关于作者
+##  关于作者
+
+勇哥，资深架构师，曾就职于神州优车、同程艺龙、科大讯飞等公司，对高并发解决方案（缓存、消息队列、分库分表）有非常深刻的认知。 
+
 
 
 ## 作品PDF
 
 - [RocketMQ4.X 设计精要](https://mp.weixin.qq.com/s/aMSa5GKloN2_lsMHRpGiOA)
+
 
 ## 公众号
 

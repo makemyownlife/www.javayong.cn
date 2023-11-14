@@ -43,9 +43,9 @@ export default hopeTheme({
     intro: "/about-the-author/",
     sidebarDisplay: "mobile",
     medias: {
-      Zhihu: "https://www.zhihu.com/people/javaguide",
-      Github: "https://github.com/Snailclimb",
-      Gitee: "https://gitee.com/SnailClimb",
+      Zhihu: "https://www.zhihu.com/people/makemyownlife",
+      Github: "https://github.com/makemyownlife",
+      Gitee: "https://gitee.com/makemyownlife",
     },
   },
 
