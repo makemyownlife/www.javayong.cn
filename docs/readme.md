@@ -4,8 +4,8 @@ icon: home
 title: 勇哥Java实战
 heroImage: /logo.png
 heroText: 勇哥Java实战
-tagline: Java 基础、高并发三剑客（缓存、消息队列、分库分表）、实战项目讲解。
-actions:
+tagline: Java基础、高并发三剑客（缓存、消息队列、分库分表）、实战项目讲解。
+actions: 
   - text: 开始阅读
     link: /home/
     type: primary
