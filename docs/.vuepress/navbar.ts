@@ -7,5 +7,11 @@ export default navbar([
     {text: "消息队列", icon: "MQ", link: "/mq/"},
     {
         text: "程序人生", icon: "article", link: "/high-quality-technical-articles/",
-    }
+    },
+    {
+        text: "B站视频",
+        icon: "bzhan",
+        link: "https://space.bilibili.com/472223327"
+    },
+
 ]);
