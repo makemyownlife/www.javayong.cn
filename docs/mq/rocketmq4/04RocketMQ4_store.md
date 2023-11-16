@@ -17,13 +17,13 @@ RocketMQ 优异的性能表现，必然绕不开其优秀的存储模型 。
 
 这篇文章，笔者按照自己的理解 , 尝试分析 RocketMQ 的存储模型，希望对大家有所启发。 
 
-![](https://oscimg.oschina.net/oscnet/up-85179d7ef012bd475da218a667507e31393.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/4IBZMyztpU.webp!large)
 
 ## 1 整体概览
 
 首先温习下 RocketMQ 架构。
 
-![](https://img2023.cnblogs.com/blog/2487169/202306/2487169-20230630195412074-744632871.webp)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/XYRrSnhfuT.webp!large)
 
 整体架构中包含四种角色 : 
 
@@ -37,7 +37,7 @@ RocketMQ 优异的性能表现，必然绕不开其优秀的存储模型 。
 
 本文的重点在于分析 BrokerServer 的消息存储模型。我们先进入 broker 的文件存储目录 。
 
-![](https://oscimg.oschina.net/oscnet/up-83b1effdd6fa374828db4e52b52800e4e54.png)
+![](https://cdn.learnku.com/uploads/images/202306/05/110388/AWhYeCz1HL.webp!large)
 
 消息存储和下面三个文件关系非常紧密：
 
@@ -65,13 +65,13 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 
 **所有的消息都会顺序写入数据文件，当文件写满了，会写入下一个文件**。
 
-![](https://oscimg.oschina.net/oscnet/up-6d06c299479d66a86ff8303df50da571a16.png)
+![](https://cdn.learnku.com/uploads/images/202306/05/110388/OXCR8q0haW.webp!large)
 
 如上图所示，单个文件大小默认 1G , 文件名长度为 20 位，左边补零，剩余为起始偏移量，比如 00000000000000000000 代表了第一个文件，起始偏移量为 0 ，文件大小为1 G = 1073741824。
 
 当第一个文件写满了，第二个文件为 00000000001073741824，起始偏移量为 1073741824，以此类推。
 
-![](https://oscimg.oschina.net/oscnet/up-6d22fc725b1eba9f5621cfc9d1c6959b4ad.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/gzN5dRWsG7.webp!large)
 
 从上图中，我们可以看到消息是一条一条写入到文件，每条消息的格式是固定的。
 
@@ -81,7 +81,7 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 
    磁盘的存取速度相对内存来讲并不快，一次磁盘 IO 的耗时主要取决于：寻道时间和盘片旋转时间，提高磁盘 IO 性能最有效的方法就是：减少随机 IO，增加顺序 IO 。
 
-   ![对比随机和顺序读写在内存和磁盘中的表现](https://oscimg.oschina.net/oscnet/up-f90feeabf765da441c0ceaccb162e772cf9.png)
+   ![对比随机和顺序读写在内存和磁盘中的表现](https://cdn.learnku.com/uploads/images/202311/16/110388/EjZJC7giv1.webp!large)
 
    《 The Pathologies of Big Data 》这篇文章指出：内存随机读写的速度远远低于磁盘顺序读写的速度。磁盘顺序写入速度可以达到几百兆/s，而随机写入速度只有几百 KB /s，相差上千倍。
 
@@ -93,7 +93,7 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 
 3. 通过消息 offsetMsgId 查询消息数据
 
-   ![](https://oscimg.oschina.net/oscnet/up-50ecf7787ef5cb869e4070a5bd4d4431e91.png)
+   ![](https://cdn.learnku.com/uploads/images/202311/16/110388/xphlePAVT9.webp!large)
 
    消息 offsetMsgId 是由 Broker 服务端在写入消息时生成的 ，该消息编号包含两个部分：
 
@@ -107,7 +107,7 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 
 在介绍 consumequeue 文件之前， 我们先温习下消息队列的传输模型-**发布订阅模型** ， 这也是 RocketMQ 当前的传输模型。 
 
-![](https://oscimg.oschina.net/oscnet/up-e259480ebb3f23688d357366ff71ef30dba.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/reIMgPJi1b.webp!large)
 
 发布订阅模型具有如下特点：
 
@@ -122,12 +122,12 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 
 进入 rocketmq 存储目录，显示见下图：
 
-![](https://oscimg.oschina.net/oscnet/up-db90ca808b6609202502b1bf52b955eaf5c.png)
+![](https://cdn.learnku.com/uploads/images/202306/05/110388/E7tgMi1WhB.webp!large)
 
 1. 消费文件按照主题存储，每个主题下有不同的队列，图中 my-mac-topic 有 16 个队列 ;
 2. 每个队列目录下 ，存储 consumequeue 文件，每个 consumequeue 文件也是顺序写入，数据格式见下图。
 
-![](https://oscimg.oschina.net/oscnet/up-2cd72b0f83bf79fd1694d02881fca0ce07c.png)
+![](https://cdn.learnku.com/uploads/images/202310/11/110388/o4BiIVsDSs.webp!large)
 
 每个 consumequeue 包含 30 万个条目，每个条目大小是 20 个字节，每个文件的大小是 30 万 * 20 = 60万字节，每个文件大小约5.72M 。和 commitlog 文件类似，consumequeue 文件的名称也是以偏移量来命名的，可以通过消息的逻辑偏移量定位消息位于哪一个文件里。
 
@@ -144,28 +144,28 @@ RocketMQ 的消息数据都会写入到数据文件中， 我们称之为 commit
 由于是哈希索引，请务必保证key尽可能唯一，这样可以避免潜在的哈希冲突。
 
 ```java
-//订单Id   
-String orderId = "1234567890";   
-message.setKeys(orderId);   
+  //订单Id   
+  String orderId = "1234567890";   
+  message.setKeys(orderId);   
 ```
 
 从开源的控制台中根据主题和 key 查询消息列表：
 
-![](https://oscimg.oschina.net/oscnet/up-d012d099bb53ecbeaba7aa918a39b07ae36.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/6OMAGHF1zX.webp!large)
 
 进入索引文件目录 ，如下图所以：
 
-![](https://oscimg.oschina.net/oscnet/up-931410541a837bed24c05e0350581f08481.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/03v6Z5ZaES.webp!large)
 
 索引文件名 fileName 是以创建时的时间戳命名的，固定的单个 IndexFile 文件大小约为 400 M 。
 
 IndexFile 的文件逻辑结构类似于 JDK 的 HashMap 的**数组加链表**结构。
 
-![HashMap数据结构](https://oscimg.oschina.net/oscnet/up-93dc006af75893d045783986ee61161c3d0.jpg)
+![HashMap数据结构](https://cdn.learnku.com/uploads/images/202311/16/110388/HBvvQgemjK.webp!large)
 
 索引文件主要由 Header、Slot Table (默认 500 万个条目)、Index Linked List（默认最多包含 2000万个条目）三部分组成 。 
 
-![](https://javayong.cn/pics/rocketmq/index.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/iigZg4mGG2.png!large)
 
 假如订单系统发送两条消息 A 和 B , 他们的 key 都是 "1234567890" ，我们依次存储消息 A  ,  消息 B 。
 

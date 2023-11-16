@@ -13,5 +13,4 @@ export default navbar([
         icon: "bzhan",
         link: "https://space.bilibili.com/472223327"
     },
-
 ]);
