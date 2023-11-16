@@ -1,3 +1,17 @@
+---
+title: RocketMQ 消息轨迹
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费,事务原理,消息轨迹
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
 这篇文章，我们聊一聊 RocketMQ 的**消息轨迹**设计思路。
 
 查询消息轨迹可作为生产环境中排查问题强有力的数据支持 ，也是研发同学解决线上问题的重要武器之一。

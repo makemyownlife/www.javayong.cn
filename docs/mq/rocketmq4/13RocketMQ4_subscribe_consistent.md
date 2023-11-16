@@ -1,3 +1,18 @@
+---
+title: RocketMQ 订阅关系保持一致
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费,事务原理,消息轨迹,消息堆积
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 这篇文章，笔者想聊聊 RocketMQ 最佳实践之一：**保证订阅关系一致**。
 
 订阅关系一致指的是同一个消费者 Group ID 下所有 Consumer 实例所订阅的 Topic 、Tag 必须完全一致。

@@ -1,3 +1,18 @@
+---
+title: RocketMQ 消息堆积
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费,事务原理,消息轨迹,消息堆积
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 很多同学都在使用 RocketMQ 时，经常会遇到消息堆积的问题。这篇文章，我们聊聊消息堆积的概念，以及如何应对消息堆积。
 
 ![](https://javayong.cn/pics/rocketmq/messageduiji.png)

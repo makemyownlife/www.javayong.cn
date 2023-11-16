@@ -1,3 +1,18 @@
+---
+title: RocketMQ 广播消费
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 这篇文章我们聊聊广播消费，因为广播消费在某些场景下真的有奇效。笔者会从**基础概念**、**实现机制**、**实战案例**三个方面一一展开，希望能帮助到大家。
 
 # 1 基础概念

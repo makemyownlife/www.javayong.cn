@@ -1,3 +1,18 @@
+---
+title: RocketMQ 事务原理
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费,事务原理
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 事务消息是 RocketMQ 的高级特性之一，相信很多同学都对于其实现机制很好奇。
 
 这篇文章，笔者会从**应用场景**、**功能原理**、**实战例子**、**实现细节**四个模块慢慢为你揭开事务消息的神秘面纱。

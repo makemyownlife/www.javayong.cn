@@ -1,3 +1,18 @@
+---
+title: RocketMQ 主从同步
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,消费者,广播消费,主从同步
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 RocketMQ 主从复制是 RocketMQ 高可用机制之一，数据可以从主节点复制到一个或多个从节点。
 
 这篇文章，我们聊聊 RocketMQ 的主从复制，希望大家读完之后，能够理解主从复制的精髓。

@@ -1,8 +1,23 @@
+---
+title: RocketMQ 生产者
+category: RocketMQ
+tag:
+  - RocketMQ 
+  - 消息队列
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,生产者
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
+---
+
 这篇文章，我们从源码的角度探寻 RocketMQ Producer 的实现机制。
 
 ![](https://javayong.cn/pics/rocketmq/producer.png?b-12)
 
-# 1 基础配置
+## 1 基础配置
 
 我们先展示生产者发送消息的示例代码。
 
@@ -45,9 +60,9 @@ producer.sendOneway(msg);
 4. 定义消息对象 ；
 5. 生产者支持**普通发送**、**oneway 发送**、**异步回调**三种方式发送消息 。
 
-# 2 发送消息流程
+## 2 发送消息流程
 
-## 2.1 构造函数
+### 2.1 构造函数
 
 下图展示了生产者`DefaultMQProducer` 类的构造函数，包装类 `DefaultMQProducerImpl` 是我们这一小节的核心。
 
@@ -59,7 +74,7 @@ producer.sendOneway(msg);
 
 2. 根据是否开启消息轨迹参数 `enableMsgTrace` 判断是否增加消息轨迹逻辑 。
 
-## 2.2 启动生产者
+### 2.2 启动生产者
 
 `DefaultMQProducer` 类的 start 方法，本质上是调用包装类 `DefaultMQProducerImpl` 的 start 方法。
 
@@ -67,13 +82,13 @@ producer.sendOneway(msg);
 
 进入 `DefaultMQProducerImpl` 类，查看该类的逻辑 。
 
-### 01 检测配置
+#### 01 检测配置
 
 判断生产者组是否合法，生产者名称不能和默认生产者组名称相同。
 
 ![](https://javayong.cn/pics/rocketmq/producercheckconfig.png)
 
-### 02 创建客户端实例
+#### 02 创建客户端实例
 
 ![](https://javayong.cn/pics/rocketmq/mqclientinstance.png)
 
@@ -87,7 +102,7 @@ producer.sendOneway(msg);
 
   ![](https://javayong.cn/pics/rocketmq/instanceroutertable.png)
 
-### 03 注册本地生产者
+#### 03 注册本地生产者
 
 ```java
 boolean registerOK = mQClientFactory.registerProducer(this.defaultMQProducer.getProducerGroup(), this);
@@ -99,7 +114,7 @@ boolean registerOK = mQClientFactory.registerProducer(this.defaultMQProducer.get
 MQProducerInner prev = this.producerTable.putIfAbsent(group, producer);
 ```
 
-### 04 启动客户端实例
+#### 04 启动客户端实例
 
   ![](https://javayong.cn/pics/rocketmq/instancestart.png)
 
@@ -129,7 +144,7 @@ MQProducerInner prev = this.producerTable.putIfAbsent(group, producer);
 
 更新逻辑比较简单，首先从名字服务获取主题路由信息对象 `topicRoute`，然后更新 `DefaultMQProducerImpl`的**主题发布信息**`topicPublishInfoTable`对象 。
 
-## 2.3 发送消息
+### 2.3 发送消息
 
 进入 `DefaultMQProducerImpl` 类，查看发送消息方法  `sendDefaultImpl `。
 
@@ -142,13 +157,13 @@ MQProducerInner prev = this.producerTable.putIfAbsent(group, producer);
 - 根据路由算法选择一个消息队列，也就是 `selectOneMessageQueue`方法；
 - 调用 `sendKernelImpl`发放消息对象，封装成发送结果对象 `sendResult`。
 
-### 01 尝试获取主题发布信息
+#### 01 尝试获取主题发布信息
 
 我们知道 `MQClientInstance` 的定时任务每隔30秒会更新生产者实现类的`topicPublishInfoTable  `，但若第一次发送消息时，若缓存中无数据时候，还是要重新拉取一次。
 
 ![](https://javayong.cn/pics/rocketmq/trytofinidtopicpublishinfo.png)
 
-### 02 根据路由算法选择一个消息队列
+#### 02 根据路由算法选择一个消息队列
 
 RocketMQ 存储模型包含三部分： **数据文件 commitlog** 、**消费文件 consumequeue** 、**索引文件 indexfile**。
 
@@ -162,7 +177,7 @@ RocketMQ 存储模型包含三部分： **数据文件 commitlog** 、**消费�
 MessageQueue mqSelected = this.selectOneMessageQueue(topicPublishInfo, lastBrokerName);
 ```
 
-### 03 调用实例客户端 API 发送消息
+#### 03 调用实例客户端 API 发送消息
 
 通过路由机制选择一个 messageQueue 之后，调用实例客户端 API 发送消息。
 
@@ -170,7 +185,7 @@ MessageQueue mqSelected = this.selectOneMessageQueue(topicPublishInfo, lastBroke
 
 Broker 端在收到发送消息请求后，调用处理器 `SendMessageProcessor`处理请求，处理完成后，将响应结果返回给生产者客户端，客户端将接收到的数据组装成 `SendResult`对象。
 
-# 3 路由机制 
+## 3 路由机制 
 
 进入`DefaultMQProducerImpl#selectOneMessageQueue` 方法：
 
@@ -244,7 +259,7 @@ public class MQFaultStrategy {
 1. `sendLatencyFaultEnable` 为 false ， 通过 `TopicPublishInfo` 中的 ` messageQueueList`  中选择一个队列（MessageQueue）进行发送消息 ；
 2.  `sendLatencyFaultEnable` 为 true ，开启**延迟容错机制**。
 
-## 3.1 默认机制
+### 3.1 默认机制
 
 ```java
 // TopicPublishInfo 类
@@ -279,7 +294,7 @@ public MessageQueue selectOneMessageQueue() {
 1. 循环遍历该主题下所有的队列 ；
 2. 若上一个失败的 Broker 参数值存在，需要过滤掉上一个失败的 Broker 。
 
-## 3.2 延迟容错机制
+### 3.2 延迟容错机制
 
 所谓**延迟容错机制**，是指发送消息时，若某个队列对应的 Broker 宕机了，在默认机制下很可能下一次选择的队列还是在已经宕机的 broker ，没有办法规避故障的broker，因此消息发送很可能会再次失败，重试发送造成了不必要的性能损失。
 
@@ -376,11 +391,11 @@ public boolean isAvailable() {
 }
 ```
 
-# 4 顺序消息
+## 4 顺序消息
 
 顺序消息可以保证消息的消费顺序和发送的顺序一致，即先发送的先消费，后发送的后消费，常用于金融证券、电商业务等对消息指令顺序有严格要求的场景。
 
-## 4.1 如何保证顺序消息
+### 4.1 如何保证顺序消息
 
 消息的顺序需要由以下三个阶段保证：
 
@@ -412,7 +427,7 @@ public boolean isAvailable() {
 
   Consumer 消费消息时，同一 Sharding Key 的消息使用单线程消费，保证消息消费顺序和存储顺序一致，最终实现消费顺序和发布顺序的一致。
 
-## 4.2. 生产者发送顺序消息 
+### 4.2. 生产者发送顺序消息 
 
 下面的代码展示生产者如何发生顺序消息 。
 
