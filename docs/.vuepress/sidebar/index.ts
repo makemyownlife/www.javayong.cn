@@ -10,7 +10,7 @@ export default sidebar({
             prefix: "cache",
             collapsible: true,
             children: [
-                
+
             ]
         },
         {
@@ -26,6 +26,7 @@ export default sidebar({
                     icon: "",
                     children: [
                         "00RocketMQ4_introduce",
+                        "01RocketMQ4_artch",
                         "01RocketMQ4_network",
                         "02RocketMQ4_nameserver"
                     ],
