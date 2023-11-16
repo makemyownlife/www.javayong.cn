@@ -17,7 +17,7 @@ head:
 
 于是边查阅文档边实战，收获颇丰，写这篇文章，想和大家分享笔者学习的过程，一起品味Spring Cache设计之美。
 
-![](https://oscimg.oschina.net/oscnet/up-c50157a9ca6cda963533e2daa851e19b17f.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/RK8gWPf7o2.webp!large)
 
 ## 1 硬编码
 
@@ -72,7 +72,7 @@ head:
 
 首先需要明确一点：Spring Cache不是一个具体的缓存实现方案，而是一个对<font color='red'>缓存使用的抽象</font>(**Cache Abstraction**)。
 
-![](https://oscimg.oschina.net/oscnet/up-5cc7e211b6da4eacbf5ac66100a4de2ac4a.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/ZewikIryyK.webp!large)
 
 ### 2.1 Spring AOP
 
@@ -85,7 +85,7 @@ Spring AOP是基于代理模式（**proxy-based**）。
  pojo.foo();
 ```
 
-![](https://oscimg.oschina.net/oscnet/up-95b2221ddf7fc70b198b71c27b0a6be3762.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/9PtqLGrXss.webp!large)
 
 将代码做一些调整，pojo对象的引用修改成代理类。
 
@@ -99,13 +99,13 @@ Pojo pojo = (Pojo) factory.getProxy();
 pojo.foo();
 ```
 
-![](https://oscimg.oschina.net/oscnet/up-3f82245b8696ef2ba55a7fdb80c38698893.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/y2L0WUBAkn.webp!large)
 
 调用pojo的foo方法的时候，实际上是动态生成的代理类调用foo方法。
 
 代理类在方法调用前可以获取方法的参数，当调用方法结束后，可以获取调用该方法的返回值，通过这种方式就可以实现缓存的逻辑。
 
-###  2.2  缓存声明
+### 2.2 缓存声明
 
 缓存声明，也就是标识需要缓存的方法以及**缓存策略**。
 
@@ -140,7 +140,7 @@ public User getUserById(Long userId) {
 通常情况下，@Cacheable有一个属性key可以直接定义缓存key，开发者可以使用[SpEL](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/expressions.html)语言定义key值。
 
 若没有指定属性key，缓存抽象提供了 `KeyGenerator`来生成key ，默认的生成器代码见下图：
-![](https://oscimg.oschina.net/oscnet/up-04d3725f87ba9e953675a3c115419978f5e.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/C4vvh1Bv7s.webp!large)
 
 它的算法也很容易理解：
 
@@ -216,7 +216,7 @@ public void deleteUserById(Long id) {
 
 Spring Cache是一个对<font color='red'>缓存使用的抽象</font>，它提供了多种存储集成。
 
-![](https://oscimg.oschina.net/oscnet/up-db5eb07fcde62c5c3d1dce3c98a681cca79.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/OjMqsOn5dA.webp!large)
 
 要使用它们，需要简单地声明一个适当的`CacheManager` - 一个控制和管理`Cache`的实体。
 
@@ -235,31 +235,31 @@ public interface CacheManager {
 
 在CacheConfigurations配置类中，可以看到不同集成类型有不同的缓存配置类。
 
-![](https://oscimg.oschina.net/oscnet/up-55dc5e5feddeccbca4e832421746d8e2cb2.png "Simple")
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/vk9nmlzIbC.webp!large "Simple")
 
 通过SpringBoot的自动装配机制，创建CacheManager的实现类`ConcurrentMapCacheManager`。
 
-![](https://oscimg.oschina.net/oscnet/up-0a2306a58157c9c284aaaa7fad6f58b8983.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/GYJeXgi4Il.webp!large)
 
 而`ConcurrentMapCacheManager`的getCache方法，会创建`ConcurrentCacheMap`。
 
-![](https://oscimg.oschina.net/oscnet/up-d23c54dc61683867171f7c9197286d081d3.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/TTOwUF59LP.webp!large)
 
 `ConcurrentCacheMap`实现了`org.springframework.cache.Cache`接口。
 
-![](https://oscimg.oschina.net/oscnet/up-e3582963c174261eca7c9e46ef9a68ef1a6.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/qd2d2wJdJz.webp!large)
 
 从Spring Cache的**Simple**的实现，缓存配置需要实现两个接口：
 
 - **org.springframework.cache.CacheManager**
 
-- **org.springframework.cache.Cache** 
+- **org.springframework.cache.Cache**
 
 ## 3 入门例子
 
 首先我们先创建一个工程spring-cache-demo。
 
-![](https://oscimg.oschina.net/oscnet/up-0cb2ba8c2f1246a81922725081025d84f87.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/QOyVUVjie7.webp!large)
 
 caffeine和Redisson分别是本地内存和分布式缓存Redis框架中的佼佼者，我们分别演示如何集成它们。
 
@@ -307,7 +307,7 @@ public class MyCacheConfig {
 
 另外，MyCacheConfig类上我们添加了注解：**@EnableCaching**。
 
-#### 3.1.3  业务代码
+#### 3.1.3 业务代码
 
 根据**缓存声明**这一节，我们很容易写出如下代码。
 
@@ -353,7 +353,7 @@ Total: 1
 </dependency>
 ```
 
-#### 3.2.2  Redisson缓存配置
+#### 3.2.2 Redisson缓存配置
 
 ```
 @Bean(destroyMethod = "shutdown")
@@ -375,11 +375,11 @@ CacheManager cacheManager(RedissonClient RedissonClient) {
 }
 ```
 
-可以看到，从Caffeine切换到Redisson，只需要修改缓存配置类，定义**CacheManager** 对象即可。而业务代码并不需要改动。 
+可以看到，从Caffeine切换到Redisson，只需要修改缓存配置类，定义**CacheManager** 对象即可。而业务代码并不需要改动。
 
 Controller层调用 getUserById方法，用户ID为1的时候，可以从Redis Desktop Manager里看到： 用户信息已被缓存，user_cache缓存存储是Hash数据结构。
 
-![](https://oscimg.oschina.net/oscnet/up-f39891007be36e8328d3ebeeccf9c41daab.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/dWCrSBzXSc.webp!large)
 
 因为Redisson默认的编解码是**FstCodec**， 可以看到key的名称是： \xF6\x01。
 
@@ -397,7 +397,7 @@ public RedissonClient Redisson() {
 
 再次调用 getUserById方法 ，控制台就变成：
 
-![](https://oscimg.oschina.net/oscnet/up-dacde16f9f6c9d80f5dba664128a888c88c.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/Hh80EPVC0Z.webp!large)
 
 可以观察到：缓存key已经变成了：["java.lang.Long",1]，改变序列化后key和value已发生了变化。
 
@@ -419,7 +419,7 @@ public List<User> getUserList(List<Long> idList) {
 
 执行getUserList方法，参数id列表为：[1，3] 。
 
-![](https://oscimg.oschina.net/oscnet/up-3dd24b55cba3f867d2fb8e963ad3d212e8e.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/mOd6M7BgeW.webp!large)
 
 执行完成之后，控制台里可以看到：<font color='red'>列表整体直接被缓存起来</font>，用户列表缓存和用户条目缓存并**没有共享**，他们是平行的关系。
 
@@ -427,9 +427,9 @@ public List<User> getUserList(List<Long> idList) {
 
 类似这样的思考，很多开发者也向Spring Framework研发团队提过。
 
-![](https://oscimg.oschina.net/oscnet/up-0a908b492df773b92d9f553f904e98017b6.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/UkXRc7g8O2.webp!large)
 
-![](https://oscimg.oschina.net/oscnet/up-cdddcc19cd5f535794821f3773e4bb8a191.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/XHUWdfuvUv.webp!large)
 
 官方的回答也很明确：对于缓存抽象来讲，它并不关心方法返回的数据类型，假如是集合，那么也就意味着需要把集合数据在缓存中保存起来。
 
@@ -464,7 +464,7 @@ public List<User> getUserList(List<Long> idList) {
 
 进程内缓存做为一级缓存，分布式缓存做为二级缓存，首先从一级缓存中查询，若能查询到数据则直接返回，否则从二级缓存中查询，若二级缓存中可以查询到数据，则回填到一级缓存中，并返回数据。若二级缓存也查询不到，则从数据源中查询，将结果分别回填到一级缓存，二级缓存中。
 
-![来自《凤凰架构》缓存篇](https://oscimg.oschina.net/oscnet/up-15ad6ae5ee11e2033883b25177a7e6864c5.png)
+![来自《凤凰架构》缓存篇](https://cdn.learnku.com/uploads/images/202305/07/110388/6jIXNdJbHp.webp!large)
 
 Spring Cache并没有二级缓存的实现，我们可以实现一个简易的二级缓存DEMO，加深对技术的理解。
 
@@ -477,15 +477,15 @@ Spring Cache并没有二级缓存的实现，我们可以实现一个简易的�
 
 MultiLevelCacheManager是最核心的类，需要实现**getCache**和**getCacheNames**两个接口。
 
-![](https://oscimg.oschina.net/oscnet/up-a37c2004424483b3ec35e698e38e6340bf6.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/MlFyK4WSiF.webp!large)
 
-创建多级缓存，第一级缓存是：Caffeine ,  第二级缓存是：Redisson。
+创建多级缓存，第一级缓存是：Caffeine , 第二级缓存是：Redisson。
 
-![](https://oscimg.oschina.net/oscnet/up-7f9d262abe07b8ad322cc87b9ad75ea4de0.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/JoL5oTXi6y.webp!large)
 
 二级缓存，为了快速完成DEMO，我们使用Redisson对Spring Cache的扩展类**RedissonCache** 。它的底层是**RMap**，底层存储是Hash。
 
-![](https://oscimg.oschina.net/oscnet/up-5348560600537b62cdea5e593f88d7fd918.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/Z4dbRzEVOa.webp!large)
 
 我们重点看下缓存的「查询」和「存储」的方法：
 
@@ -530,7 +530,7 @@ public void put(Object key, Object value) {
 
 最后配置缓存管理器，原有的业务代码不变。
 
-![](https://oscimg.oschina.net/oscnet/up-15a5cc5bf556c5301dd6c947e84cf067763.png)
+![](https://cdn.learnku.com/uploads/images/202311/16/110388/6IEuaPkZ4h.webp!large)
 
 执行下getUserById方法，查询用户编号为1的用户信息。
 
@@ -577,4 +577,4 @@ public void put(Object key, Object value) {
 
 如果我的文章对你有所帮助，还请帮忙**点赞、在看、转发**一下，你的支持会激励我输出更高质量的文章，非常感谢！
 
-![](https://oscimg.oschina.net/oscnet/up-9a84ebdc2d42e5dce07580c3f1dc7865795.JPEG)
+![](https://cdn.learnku.com/uploads/images/202304/06/110388/vBrZNjbMur.webp!large)
