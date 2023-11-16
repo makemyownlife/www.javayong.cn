@@ -1,9 +1,16 @@
 ---
-title: RocketMQ 名字服务
+title: 名字服务
 category: RocketMQ
 tag:
+  - RocketMQ 
   - 消息队列
-  - RocketMQ
+head:
+  - - meta
+    - name: keywords
+      content: RocketMQ,消息队列,设计,精要,Nameserver,名字服务
+  - - meta
+    - name: description
+      content: 一本RocketMQ电子书，希望对你有帮助！
 ---
 
 NameServer 是专为 RocketMQ 设计的**轻量级名字服务**，它的源码非常精简，八个类 ，少于1000行代码。
