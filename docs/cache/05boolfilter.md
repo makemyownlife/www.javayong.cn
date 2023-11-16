@@ -12,20 +12,6 @@ head:
     - name: description
       content: 对于后端程序员来讲，学习和理解布隆过滤器有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
 ---
----
-title: 详解布隆过滤器
-category: cache
-tag:
-- cache
-- 布隆过滤器
-head:
-- - meta
-- name: keywords
-content: 布隆过滤器,缓存
-- - meta
-- name: description
-content: 对于后端程序员来讲，学习和理解布隆过滤器有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
----
 
 布隆过滤器是一个精巧而且经典的数据结构。
 
@@ -343,31 +329,31 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 那么 Redisson 布隆过滤器如何保存元素呢 ？
 
 ```java
-public boolean add(T object) {
-    long[] hashes = hash(object);
-    while (true) {
-        int hashIterations = this.hashIterations;
-        long size = this.size;
-        long[] indexes = hash(hashes[0], hashes[1], hashIterations, size);
-        CommandBatchService executorService = new CommandBatchService(commandExecutor);
-        addConfigCheck(hashIterations, size, executorService);
-        //创建 bitset 对象， 然后调用setAsync方法，该方法的参数是索引。
-        RBitSetAsync bs = createBitSet(executorService);
-        for (int i = 0; i < indexes.length; i++) {
-            bs.setAsync(indexes[i]);
-        }
-        try {
-            List<Boolean> result = (List<Boolean>) executorService.execute().getResponses();
-            for (Boolean val : result.subList(1, result.size()-1)) {
-                if (!val) {
-                    return true;
+ public boolean add (T object){
+            long[] hashes = hash(object);
+            while (true) {
+                int hashIterations = this.hashIterations;
+                long size = this.size;
+                long[] indexes = hash(hashes[0], hashes[1], hashIterations, size);
+                CommandBatchService executorService = new CommandBatchService(commandExecutor);
+                addConfigCheck(hashIterations, size, executorService);
+//创建 bitset 对象， 然后调用setAsync方法，该方法的参数是索引。
+                RBitSetAsync bs = createBitSet(executorService);
+                for (int i = 0; i < indexes.length; i++) {
+                    bs.setAsync(indexes[i]);
+                }
+                try {
+                    List<Boolean> result = (List<Boolean>) executorService.execute().getResponses();
+                    for (Boolean val : result.subList(1, result.size() - 1)) {
+                        if (!val) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } catch (RedisException e) {
                 }
             }
-            return false;
-        } catch (RedisException e) {
         }
-    }
-}
 ```
 
 从源码中，我们发现 Redisson 布隆过滤器操作的对象是 **位图（bitMap）** 。
