@@ -1,3 +1,11 @@
+---
+title: RocketMQ 名字服务
+category: RocketMQ
+tag:
+  - 消息队列
+  - RocketMQ
+---
+
 NameServer 是专为 RocketMQ 设计的**轻量级名字服务**，它的源码非常精简，八个类 ，少于1000行代码。
 
 ![](https://javayong.cn/pics/rocketmq/nameserver.png)

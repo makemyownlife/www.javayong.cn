@@ -11,7 +11,9 @@ export default hopeTheme({
   logo: "/logo.png",
   favicon: "/favicon.ico",
 
-  iconAssets: "//at.alicdn.com/t/c/font_2922463_kweia6fbo9.css",
+  iconAssets: [
+      "https://at.alicdn.com/t/c/font_2922463_kweia6fbo9.css"
+  ],
 
   author: {
     name: "勇哥",

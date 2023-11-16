@@ -1,10 +1,18 @@
+---
+title: 网络通讯
+category: RocketMQ
+tag:
+  - 消息队列
+  - RocketMQ
+---
+
 RocketMQ 的网络通讯模块负责生产者、消费者与 Broker 之间的网络通信。
 
 笔者学习 RocketMQ 也是从通讯模块源码开始的，并且从源码里汲取了很多营养。
 
 ![](https://javayong.cn/pics/rocketmq/remotingcode.png?a=2)
 
-#  1 网络协议
+## 1 网络协议
 
 客户端和服务端之间完成数据交互，需要约定数据协议。数据协议如下图：
 
@@ -66,13 +74,13 @@ RocketMQ 的解码器就是使用了 **LenghtFieldBasedFrameDecode** 。
 
 ![](https://javayong.cn/pics/rocketmq/nettydecoder.png)
 
-# 2 通讯方式
+## 2 通讯方式
 
 客户端通信方式支持**同步 sync** 、**异步 async** 、**单向 oneway** 三种方式 。
 
 ![](https://javayong.cn/pics/rocketmq/clientcode.png?a=12)
 
-## 2.1 同步 sync
+### 2.1 同步 sync
 
 在同步通信中，客户端发送请求后会一直等待服务器响应，直到接收到响应或者超时。
 
@@ -96,7 +104,7 @@ RocketMQ 的解码器就是使用了 **LenghtFieldBasedFrameDecode** 。
 2. 服务端将响应数据返回给客户端；
 3. 客户端将响应结果填充到响应表 reponseTable 里，同时因为是同步命令，并调用 countDownLatch 的 countDown 方法 , 这样发送消息线程就不再阻塞（**实现同步请求的精髓**）。
 
-## 2.2 异步 async
+### 2.2 异步 async
 
 异步通信中，客户端发送请求后不会等待服务器的响应，而是继续执行后续代码。客户端会注册一个回调函数或者监听器，用于处理服务器响应。当服务器响应返回时，会触发回调函数的执行。
 
@@ -125,7 +133,7 @@ boolean acquired = this.semaphoreAsync.tryAcquire(timeoutMillis, TimeUnit.MILLIS
 
 6、通讯框架收到服务端的响应数据后，通过回调线程执行回调函数。
 
-## 2.3 单向 oneway
+### 2.3 单向 oneway
 
 单向通信发起调用后，不关心调用结果，不做超时控制，只要请求已经发出，就完成本次调用。
 
@@ -157,7 +165,7 @@ boolean acquired = this.semaphoreOneway.tryAcquire(timeoutMillis, TimeUnit.*MILL
 | 异步     | 快          | 有               | 不丢失     |
 | 单向     | 最快        | 无               | 可能丢失   |
 
-# 3 Reactor多线程设计
+## 3 Reactor多线程设计
 
 RocketMQ 的通信模块采用 Netty 组件作为底层通信库，同样也遵循了 Reactor 多线程模型，同时又在这之上做了一些扩展和优化。
 
@@ -182,7 +190,7 @@ N | NettyServerEPOLLSelector_%d_%d | Reactor 线程池
 M1 | NettyServerCodecThread_%d | Worker线程池
 M2 | RemotingExecutorThread_%d | 业务 processor 处理线程池 
 
-# 4 写到最后
+## 4 写到最后
 
 通讯模块核心知识点 ：
 
