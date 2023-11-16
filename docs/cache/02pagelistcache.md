@@ -49,7 +49,6 @@ public List<Product> getPageList(String param,int page,int size) {
 
 2、使用 Redis 的 keys 找到该业务的分页缓存，执行删除指令。 但 keys 命令对性能影响很大，会导致 Redis 很大的延迟 。
 
-ti
 
 ## 2 查询对象ID列表，再缓存每个对象条目
 
