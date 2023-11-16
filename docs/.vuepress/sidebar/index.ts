@@ -28,7 +28,15 @@ export default sidebar({
                         "00RocketMQ4_introduce",
                         "01RocketMQ4_artch",
                         "01RocketMQ4_network",
-                        "02RocketMQ4_nameserver"
+                        "02RocketMQ4_nameserver",
+                        "03RocketMQ4_producer",
+                        "04RocketMQ4_store",
+                        "06RocketMQ4_consumer",
+                        "07RocketMQ4_broadcast_consumer",
+                        "08RocketMQ4_masterslave",
+                        "10RocketMQ4_transaction",
+                        "11RocketMQ4_messagetrack",
+                        "13RocketMQ4_subscribe_consistent",
                     ],
                 }
             ]
