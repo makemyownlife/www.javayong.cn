@@ -5,7 +5,7 @@ export default sidebar({
     "/": [
         {
             text: "缓存实战",
-            icon: "redis",
+            icon: "buffer",
             prefix: "cache",
             collapsible: true,
             children: [
@@ -18,7 +18,7 @@ export default sidebar({
         },
         {
             text: "消息队列",
-            icon: "MQ",
+            icon: "Kafka",
             prefix: "mq",
             collapsible: true,
             children: [
@@ -46,7 +46,7 @@ export default sidebar({
         },
         {
             text: "技术人生",
-            icon: "article",
+            icon: "life-ring",
             prefix: "itlife",
             collapsible: true,
             children: [
