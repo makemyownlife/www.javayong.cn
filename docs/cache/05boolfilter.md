@@ -19,7 +19,7 @@ head:
 
 对于后端程序员来讲，学习和理解布隆过滤器有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/gGTKn38KyF.webp!large)
+![](https://www.javayong.cn/pics/temp//gGTKn38KyF.webp!large)
 
 # 1 缓存穿透
 
@@ -41,7 +41,7 @@ return product;
 }
 ```
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/szzXnQVHGA.webp!large)
+![](https://www.javayong.cn/pics/temp//szzXnQVHGA.webp!large)
 
 假设此商品既不存储在缓存中，也不存在数据库中，则没有办法**回写缓存**，当有类似这样大量的请求访问服务时，数据库的压力就会极大。
 
@@ -63,7 +63,7 @@ return product;
 
 简单来说就是准备一个长度为 m 的位数组并初始化所有元素为 0，用 k 个散列函数对元素进行 k 次散列运算跟 len (m) 取余得到 k 个位置并将 m 中对应位置设置为 1。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/Qcb9oB5g1v.webp!large)
+![](https://www.javayong.cn/pics/temp//Qcb9oB5g1v.webp!large)
 
 如上图，位数组的长度是８，散列函数个数是 3，先后保持两个元素ｘ，ｙ。这两个元素都经过三次哈希函数生成三个哈希值，并映射到位数组的不同的位置，并置为1。元素 x 映射到位数组的第０位，第４位，第７位，元素ｙ映射到数组的位数组的第１位，第４位，第６位。
 
@@ -85,22 +85,22 @@ return product;
 
 同时，哈希函数的个数也需要考量，哈希函数的个数越大，检索的速度会越慢，误判率也越小，反之，则误判率越高。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/9JhROcXyEi.webp!large)
+![](https://www.javayong.cn/pics/temp//9JhROcXyEi.webp!large)
 
 从张图我们可以观察到相同位数组长度的情况下，随着哈希函数的个人的增长，误判率显著的下降。
 
-误判率 p 的公式是![](https://cdn.learnku.com/uploads/images/202304/15/110388/NntKce0NiK.webp!large)
+误判率 p 的公式是![](https://www.javayong.cn/pics/temp//NntKce0NiK.webp!large)
 
-1\. k 次哈希函数某一 bit 位未被置为 1 的概率为![](https://cdn.learnku.com/uploads/images/202304/15/110388/AeAm0pE51W.webp!large)
+1\. k 次哈希函数某一 bit 位未被置为 1 的概率为![](https://www.javayong.cn/pics/temp//AeAm0pE51W.webp!large)
 
-2\. 插入 n 个元素后某一 bit 位依旧为 0 的概率为![](https://cdn.learnku.com/uploads/images/202304/15/110388/JWSFwFmn1w.webp!large)
+2\. 插入 n 个元素后某一 bit 位依旧为 0 的概率为![](https://www.javayong.cn/pics/temp//JWSFwFmn1w.webp!large)
 
-3\. 那么插入 n 个元素后某一 bit 位置为1的概率为![](https://cdn.learnku.com/uploads/images/202304/15/110388/45NmbP5AEk.webp!large)
-4\. 整体误判率为 ![](https://cdn.learnku.com/uploads/images/202304/15/110388/786m1xNDFG.webp!large)，当 m 足够大时，误判率会越小，该公式约等于![](https://cdn.learnku.com/uploads/images/202304/15/110388/VsYuYA5bWH.webp!large)
+3\. 那么插入 n 个元素后某一 bit 位置为1的概率为![](https://www.javayong.cn/pics/temp//45NmbP5AEk.webp!large)
+4\. 整体误判率为 ![](https://www.javayong.cn/pics/temp//786m1xNDFG.webp!large)，当 m 足够大时，误判率会越小，该公式约等于![](https://www.javayong.cn/pics/temp//VsYuYA5bWH.webp!large)
 
 我们会预估布隆过滤器的误判率 p 以及待插入的元素个数 n 分别推导出最合适的位数组长度 m 和 哈希函数个数 k。
 
-<img src="https://oscimg.oschina.net/oscnet/up-f6c28a2073b26b6a18f7615b2a34c4fbf98.jpg" style="zoom:43%;" />
+<img src="https://www.javayong.cn/pics/temp//up-f6c28a2073b26b6a18f7615b2a34c4fbf98.jpg" style="zoom:43%;" />
 
 **▍ 布隆过滤器支持删除吗**
 
@@ -322,7 +322,7 @@ public boolean tryInit(long expectedInsertions, double falseProbability) {
 }
 ```
 
-![Bf配置信息](https://cdn.learnku.com/uploads/images/202304/15/110388/nSbowXJ8Dk.webp!large)
+![Bf配置信息](https://www.javayong.cn/pics/temp//nSbowXJ8Dk.webp!large)
 
 Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构的 key ，存储布隆过滤器的4个核心属性。
 
@@ -362,7 +362,7 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 
 为了方便大家理解，我做了一个简单的测试。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/9GDwxhCukO.webp!large)
+![](https://www.javayong.cn/pics/temp//9GDwxhCukO.webp!large)
 
 通过 Redisson API 创建 key 为 `mybitset `的 位图 ，设置索引 3 ，5，6，8 位为 1 ，右侧的**二进制值**也完全匹配。
 
@@ -376,7 +376,7 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 
 若包含则从缓存中查询数据，若缓存中也没有，则查询数据库并回写到缓存里，最后给前端返回。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/f6Avy1Movi.webp!large)
+![](https://www.javayong.cn/pics/temp//f6Avy1Movi.webp!large)
 
 **2、元素删除场景**
 
@@ -386,7 +386,7 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 
 从工程角度来看，**定时重新构建布隆过滤器**这个方案可行也可靠，同时也相对简单。
 
-![](https://cdn.learnku.com/uploads/images/202304/15/110388/wp53mfGqZW.webp!large)
+![](https://www.javayong.cn/pics/temp//wp53mfGqZW.webp!large)
 
 1. 定时任务触发全量商品查询 ;
 2. 将商品编号添加到新的布隆过滤器 ;

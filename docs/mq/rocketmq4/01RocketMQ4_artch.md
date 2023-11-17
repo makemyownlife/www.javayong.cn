@@ -227,7 +227,7 @@ Consumer 消费消息失败后，要提供一种重试机制，令消息再消�
 
 我们先对 RocketMQ 4.9.X 架构做一个概览。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/WmCfyfFaPD.webp!large)
+![](https://www.javayong.cn/pics/temp//WmCfyfFaPD.webp!large.png)
 
 整体架构中包含**四种角色** :
 
@@ -258,5 +258,4 @@ RocketMQ 集群工作流程：
 4、**Producer 发送消息**，启动时先跟 NameServer 集群中的其中一台建立长连接，并从 NameServer 中获取当前发送的 Topic 存在哪些 Broker 上，轮询从队列列表中选择一个队列，然后与队列所在的 Broker 建立长连接从而向 Broker 发消息。
 
 5、Consumer 跟 Producer 类似，跟其中一台 NameServer 建立长连接，获取当前订阅 Topic 存在哪些 Broker 上，然后直接跟 Broker 建立连接通道，开始**消费消息**。
-
 

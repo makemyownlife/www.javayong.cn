@@ -62,13 +62,13 @@ Redis 的事务包含如下命令：
 
 这里有一个疑问？在开启事务的时候，Redis key 可以被修改吗？
 
-![img](https://cdn.learnku.com/uploads/images/202304/09/110388/zgcHEZMogT.webp!large)
+![img](https://www.javayong.cn/pics/temp//zgcHEZMogT.webp!large)
 
 **在事务执行 EXEC 命令之前 ，Redis key 依然可以被修改**。
 
 在事务开启之前，我们可以 watch 命令监听 Redis key 。在事务执行之前，我们修改 key 值 ，事务执行失败，返回 **nil** 。
 
-![img](https://cdn.learnku.com/uploads/images/202304/09/110388/s5X2lsfqGT.webp!large)
+![img](https://www.javayong.cn/pics/temp//s5X2lsfqGT.webp!large)
 
  通过上面的例子，watch 命令可以**实现类似乐观锁的效果** 。
 
@@ -211,7 +211,7 @@ Redis 的事务一致性是指：Redis 事务在执行过程中符合数据库�
 
 这本书是分布式系统入门的神书。在事务这一章节有一段关于 ACID 的解释：
 
-![img](https://cdn.learnku.com/uploads/images/202304/09/110388/zOQBAJrpdO.webp!large)
+![img](https://www.javayong.cn/pics/temp//zOQBAJrpdO.webp!large)
 
 > Atomicity, isolation, and durability are properties of the database,whereas consistency (in the ACID sense) is a property of the application. The application may rely on the database’s atomicity and isolation properties in order to achieve consistency, but it’s not up to the database alone. Thus, the letter C doesn’t really belong in ACID.
 
@@ -242,7 +242,7 @@ Redis 的事务具备如下特点：
 
 ## 3.1 简介
 
-![](https://cdn.learnku.com/uploads/images/202304/09/110388/0g0mSCwReL.webp!large)
+![](https://www.javayong.cn/pics/temp//0g0mSCwReL.webp!large)
 
 Lua 由标准 C 编写而成，代码简洁优美，几乎在所有操作系统和平台上都可以编译，运行。Lua 脚本可以很容易的被 C/C ++ 代码调用，也可以反过来调用 C/C++ 的函数，这使得 Lua 在应用程序中可以被广泛应用。
 
@@ -316,7 +316,7 @@ Redis Lua 脚本常用命令：
 
 思路是先将 Lua 脚本先缓存起来 ,  返回给客户端 Lua 脚本的 sha1 摘要。 客户端存储脚本的 sha1 摘要 ，每次请求执行 EVALSHA  命令即可。
 
-![img](https://cdn.learnku.com/uploads/images/202304/09/110388/zokNNe0Swx.webp!large)
+![img](https://www.javayong.cn/pics/temp//zokNNe0Swx.webp!large)
 
 EVALSHA  命令基本语法如下：
 

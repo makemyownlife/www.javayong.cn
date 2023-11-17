@@ -26,7 +26,7 @@ export default sidebar({
                     text: "RocketMQ4.X设计精要",
                     prefix: "rocketmq4/",
                     collapsible: true,
-                    icon: "",
+                    icon: "apacherocketmq",
                     children: [
                         "00RocketMQ4_introduce",
                         "01RocketMQ4_artch",
