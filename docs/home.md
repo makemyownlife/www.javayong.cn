@@ -1,6 +1,6 @@
 ---
 icon: creative
-title: 勇哥Java实战 | 首页
+title: 勇哥Java实战 | 阅读目录
 ----------------------------
 ::: tip 友情提示
 
