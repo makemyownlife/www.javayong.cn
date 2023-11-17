@@ -2,7 +2,7 @@ import {navbar} from "vuepress-theme-hope";
 
 export default navbar([
     //{ text: "Java基础", icon: "java",  link: "/home.md" },
-    {text: "缓存实战", icon: "buffer", link: "/cache/01fourJDKlocalcache.html"},
+    {text: "缓存实战", icon: "buffer", link: "/cache/00localandclustercache.html"},
     {text: "消息队列", icon: "Kafka", link: "/mq/rocketmq4/00RocketMQ4_introduce.html"},
    // {text: "分库分表", icon: "database", link: "/sharding/"},
     {

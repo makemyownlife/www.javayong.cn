@@ -9,6 +9,7 @@ export default sidebar({
             prefix: "cache",
             collapsible: true,
             children: [
+                "00localandclustercache",
                 "01fourJDKlocalcache",
                 "02pagelistcache",
                 "05boolfilter",
