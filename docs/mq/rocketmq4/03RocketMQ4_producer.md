@@ -407,7 +407,7 @@ public boolean isAvailable() {
 
   RocketMQ 版服务端判定消息产生的顺序性是参照同一生产者发送消息的时序。不同生产者、不同线程并发产生的消息，云消息队列 RocketMQ 版服务端无法判定消息的先后顺序。
 
-  ![](https://cdn.learnku.com/uploads/images/202306/05/110388/wsNXq03SCB.webp!large)
+  ![](https://www.javayong.cn/pics/temp//wsNXq03SCB.png)
 
 - **消息存储**
 

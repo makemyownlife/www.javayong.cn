@@ -17,13 +17,13 @@ RocketMQ 是笔者非常喜欢的消息队列，4.9.X 版本是目前使用最�
 
 这篇文章，笔者梳理了 RocketMQ 的消费逻辑，希望对大家有所启发。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/qaRc3GjFlL.webp!large)
+![](https://www.javayong.cn/pics/temp//qaRc3GjFlL.webp!large)
 
 ## 1 架构概览
 
 在展开集群消费逻辑细节前，我们先对 RocketMQ 4.X 架构做一个概览。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/WmCfyfFaPD.webp!large)
+![](https://www.javayong.cn/pics/temp//WmCfyfFaPD-20231117160806702.webp!large)
 
 整体架构中包含**四种角色** :
 
@@ -73,15 +73,15 @@ RocketMQ 支持两种消息模式：**集群消费**（ Clustering ）和**广�
 
 **集群消费**：**同一 Topic 下的一条消息只会被同一消费组中的一个消费者消费**。也就是说，消息被负载均衡到了同一个消费组的多个消费者实例上。
 
-![](https://cdn.learnku.com/uploads/images/202305/02/110388/YB1Famn1EF.webp!large)
+![](https://www.javayong.cn/pics/temp//YB1Famn1EF.webp!large)
 
 **广播消费**：当使用广播消费模式时，每条消息推送给集群内所有的消费者，保证消息至少被每个消费者消费一次。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/32GDhELg1w.webp!large)
+![](https://www.javayong.cn/pics/temp//32GDhELg1w.webp!large)
 
 为了实现这种发布订阅模型 ， RocketMQ 精心设计了它的存储模型。先进入 Broker 的文件存储目录。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/AWhYeCz1HL.webp!large)
+![](https://www.javayong.cn/pics/temp//AWhYeCz1HL-20231117160806691.webp!large)
 
 RocketMQ 采用的是**混合型**的存储结构。
 
@@ -91,7 +91,7 @@ RocketMQ 采用的是**混合型**的存储结构。
 
 单个文件大小默认 1G , 文件名长度为 20 位，左边补零，剩余为起始偏移量，比如 00000000000000000000 代表了第一个文件，起始偏移量为 0 ，文件大小为1 G = 1073741824 。
 
-![ commitlog 目录](https://cdn.learnku.com/uploads/images/202306/05/110388/OXCR8q0haW.webp!large)
+![ commitlog 目录](https://www.javayong.cn/pics/temp//OXCR8q0haW-20231117160806755.webp!large)
 
 这种设计有两个优点：
 
@@ -107,13 +107,13 @@ RocketMQ 采用的是**混合型**的存储结构。
 
 进入消费文件存储目录 ：
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/E7tgMi1WhB.webp!large)
+![](https://www.javayong.cn/pics/temp//E7tgMi1WhB-20231117160806719.webp!large)
 
 1、消费文件按照主题存储，每个主题下有不同的队列，图中主题 my-mac-topic 有 16 个队列 (0 到 15) ;
 
 2、每个队列目录下 ，存储 consumequeue 文件，每个 consumequeue 文件也是顺序写入，数据格式见下图。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/1y4ZNBbc3K.webp!large)
+![](https://www.javayong.cn/pics/temp//1y4ZNBbc3K.webp!large)
 
 每个 consumequeue 文件包含 30 万个条目，每个条目大小是 20 个字节，每个文件的大小是 30 万 * 20 = 60万字节，每个文件大小约 5.72M 。
 
@@ -133,15 +133,15 @@ RocketMQ 采用的是**混合型**的存储结构。
 
 我们浏览下集群消费场景下的 Broker 端的消费进度文件 **consumerOffset.json** 。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/KdhMCdYePf.webp!large)
+![](https://www.javayong.cn/pics/temp//KdhMCdYePf.webp!large)
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/jpfI145dyQ.webp!large)
+![](https://www.javayong.cn/pics/temp//jpfI145dyQ.webp!large)
 
 在进度文件 consumerOffset.json 里，数据以 key-value 的结构存储，key 表示：主题@消费者组 ， value 是 consumequeue 中每个队列对应的逻辑偏移量 。
 
 写到这里，我们**粗糙模拟**下 RocketMQ **存储模型如何满足发布订阅模型** 。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/cnRQMAQDa2.webp!large)
+![](https://www.javayong.cn/pics/temp//cnRQMAQDa2.webp!large)
 
 1、**发送消息**：生产者发送消息到 Broker ；
 
@@ -155,17 +155,17 @@ RocketMQ 采用的是**混合型**的存储结构。
 
 我们重点讲解下集群消费的消费流程 ，因为**集群消费是使用最普遍的消费模式**，理解了集群消费，广播消费也就能顺理成章的掌握了。
 
-![](https://cdn.learnku.com/uploads/images/202305/02/110388/JMHeWL51md.webp!large)
+![](https://www.javayong.cn/pics/temp//JMHeWL51md.webp!large)
 
 集群消费示例代码里，启动消费者，我们需要配置三个核心属性：**消费组名**、**订阅主题**、**消息监听器**，最后调用 start 方法启动。
 
 首先进入 `DefaultMQPushConsumerImpl` 类的 `start` 方法 。
 
-![](https://javayong.cn/pics/rocketmq/pushconsumerstart.png?a=3)
+![](https://www.javayong.cn/pics/temp//pushconsumerstart.png)
 
 消费者启动后，我们可以将整个流程简化成：
 
-![](https://javayong.cn/pics/rocketmq/consumerliucheng.png)
+![](https://www.javayong.cn/pics/temp//consumerliucheng.png)
 
 ## 4 负载均衡
 
@@ -179,7 +179,7 @@ RocketMQ 负载均衡的**核心设计理念**是
 
 负载均衡是每个**客户端独立进行计算**，那么何时触发呢 ？
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/yxd8EaU0qS.webp!large)
+![](https://www.javayong.cn/pics/temp//yxd8EaU0qS.webp!large)
 
 -   消费端启动时，立即进行负载均衡；
 
@@ -205,15 +205,15 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 (3) 先对 Topic 下的消息消费队列、消费者 Id 排序，然后用消息队列分配策略算法（默认为：消息队列的平均分配算法），计算出待拉取的消息队列；
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/iYLyVcUAt4.webp!large)
+![](https://www.javayong.cn/pics/temp//iYLyVcUAt4.webp!large)
 
-![平均分配算法](https://cdn.learnku.com/uploads/images/202306/05/110388/4OHEa2jquR.webp!large)
+![平均分配算法](https://www.javayong.cn/pics/temp//4OHEa2jquR.webp!large)
 
 这里的平均分配算法，类似于分页的算法，将所有 MessageQueue 排好序类似于记录，将所有消费端排好序类似页数，并求出每一页需要包含的平均 size 和每个页面记录的范围 range ，最后遍历整个 range 而计算出当前消费端应该分配到的记录。
 
 (4) 分配到的消息队列集合与 processQueueTable 做一个过滤比对操作。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/xs0dDuzfwc.webp!large)
+![](https://www.javayong.cn/pics/temp//xs0dDuzfwc.webp!large)
 
 消费者实例内 ，processQueueTable 对象存储着当前负载均衡的队列 ，以及该队列的处理队列 processQueue (消费快照)。
 
@@ -231,7 +231,7 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 消费者启动的时候，会创建一个**拉取消息服务 PullMessageService** ，它是一个单线程的服务。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/9lQ0kqqgMV.webp!large)
+![](https://www.javayong.cn/pics/temp//9lQ0kqqgMV.webp!large)
 
 核心流程如下：
 
@@ -239,7 +239,7 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 2、拉取消息服务向 Brorker 服务发送拉取请求 ，拉取请求的通讯模式是**异步回调模式** ;
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/wU7kAPifpi.webp!large)
+![](https://www.javayong.cn/pics/temp//wU7kAPifpi.webp!large)
 
 消费者的拉取消息服务本身就是一个单线程，使用异步回调模式，发送拉取消息请求到 Broker 后，**拉取消息线程并不会阻塞** ，可以继续处理队列 pullRequestQueue 中的其他拉取任务。
 
@@ -249,7 +249,7 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 消费快照使用**红黑树 msgTreeMap** 存储拉取服务拉取到的消息 。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/XdYYK2Hqk2.webp!large)
+![](https://www.javayong.cn/pics/temp//XdYYK2Hqk2.webp!large)
 
 5、回调函数将**消费请求**提交到**消息消费服务** ，而消息消费服务会**异步**的消费这些消息；
 
@@ -267,7 +267,7 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 下图展示了 RocketMQ 如何通过长轮询减小拉取消息的延迟。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/c53QfosbB2.webp!large)
+![](https://www.javayong.cn/pics/temp//c53QfosbB2.webp!large)
 
 核心流程如下：
 
@@ -289,11 +289,11 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 回调线程会将数据存储在队列消费快照 processQueue（内部使用**红黑树 msgTreeMap**）里，然后将消息提交到消费消息服务，消费消息服务会异步消费这些消息。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/aWJXs9ZF6L.webp!large)
+![](https://www.javayong.cn/pics/temp//aWJXs9ZF6L.webp!large)
 
 消息消费服务有两种类型：**并发消费服务**和**顺序消费服务** 。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/FC4h3oP2zB.webp!large)
+![](https://www.javayong.cn/pics/temp//FC4h3oP2zB.webp!large)
 
 ### 6.1 并发消费
 
@@ -301,7 +301,7 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 消费消息并发服务启动后，会初始化三个组件：**消费线程池**、**清理过期消息定时任务**、**处理失败消息定时任务**。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/7ZT6DQW1K1.webp!large)
+![](https://www.javayong.cn/pics/temp//7ZT6DQW1K1.webp!large)
 
 核心流程如下：
 
@@ -311,21 +311,21 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 **2、将消费对象提交到消费线程池**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/B1tBLvh3fV.webp!large)
+![](https://www.javayong.cn/pics/temp//B1tBLvh3fV.webp!large)
 
 我们看到10 条消息被组装成三个消费请求对象，不同的消费线程会执行不同的消费请求对象。
 
 **3、消费线程执行消息监听器**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/CK2wsCfJg3.webp!large)
+![](https://www.javayong.cn/pics/temp//CK2wsCfJg3.webp!large)
 
 执行完消费监听器，会返回消费结果。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/m2OC0khwGU.webp!large)
+![](https://www.javayong.cn/pics/temp//m2OC0khwGU.webp!large)
 
 **4、处理异常消息**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/V4g5vXlLc7.webp!large)
+![](https://www.javayong.cn/pics/temp//V4g5vXlLc7.webp!large)
 
 当消费异常时，异常消息将重新发回 Broker 端的重试队列（ RocketMQ 会为每个 topic 创建一个重试队列，以 %RETRY% 开头），达到重试时间后将消息投递到重试队列中进行消费重试。
 
@@ -337,25 +337,25 @@ Broker 端在收到消费者的心跳消息后，会将它维护在 ConsumerMana
 
 消费者消费一批消息完成之后，需要保存消费进度到进度管理器的本地内存。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/4UWT3ECS5W.webp!large)
+![](https://www.javayong.cn/pics/temp//4UWT3ECS5W.webp!large)
 
 首先我们会从队列消费快照 processQueue 中移除消息，返回消费快照 msgTreeMap 第一个偏移量 ，然后调用消费消息进度管理器 offsetStore 更新消费进度。
 
 **待更新的偏移量**是如何计算的呢？
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/Br4RznOnaN.webp!large)
+![](https://www.javayong.cn/pics/temp//Br4RznOnaN.webp!large)
 
 -   场景1：快照中1001（消息1）到1010（消息10）消费了，快照中没有了消息，返回已消费的消息最大偏移量 + 1 也就是1011。
 
-    ![](https://cdn.learnku.com/uploads/images/202306/05/110388/5Nhp8CddxY.webp!large)
+    ![](https://www.javayong.cn/pics/temp//5Nhp8CddxY.webp!large)
 
 -   场景2：快照中1001（消息1）到1008（消息8）消费了，快照中只剩下两条消息了，返回最小的偏移量 1009。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/kdKZew4JsR.webp!large)
+![](https://www.javayong.cn/pics/temp//kdKZew4JsR.webp!large)
 
 -   场景3：1001（消息1）在消费对象中因为某种原因一直没有被消费，即使后面的消息1005-1010都消费完成了，返回的最小偏移量是1001。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/1N0EP94TWG.webp!large)
+![](https://www.javayong.cn/pics/temp//1N0EP94TWG.webp!large)
 
 在场景3，RocketMQ 为了保证消息肯定被消费成功，消费进度只能维持在1001（消息1），直到1001也被消费完，本地的消费进度才会一下子更新到1011。
 
@@ -371,13 +371,13 @@ RocketMQ 提供两种方式一起配合解决：
 
 -   **拉取服务根据并发消费间隔配置限流**
 
-    ![](https://cdn.learnku.com/uploads/images/202306/05/110388/1h0U1AjiN1.webp!large)
+    ![](https://www.javayong.cn/pics/temp//1h0U1AjiN1.webp!large)
 
     拉取消息服务在拉取消息时候，会判断当前队列的 processQueue 消费快照里消息的最大偏移量 - 消息的最小偏移量大于消费并发间隔（2000）的时候 , 就会触发流控 , 这样就可以避免消费者无限循环的拉取新的消息。
 
 -   **清理过期消息**
 
-    ![](https://cdn.learnku.com/uploads/images/202306/05/110388/MvanDXLXjS.webp!large)
+    ![](https://www.javayong.cn/pics/temp//MvanDXLXjS.webp!large)
 
     消费消息并发服务启动后，会定期扫描所有消费的消息，若当前时间减去开始消费的时间大于消费超时时间，首先会将过期消息发送 sendMessageBack 命令发送到 Broker ，然后从快照中删除该消息。
 
@@ -407,7 +407,7 @@ RocketMQ 提供两种方式一起配合解决：
 >
 > 因为分区顺序消息有多个分区，所以**分区顺序消息比全局顺序消息的并发度和性能更高**。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/wsNXq03SCB.webp!large)
+![](https://www.javayong.cn/pics/temp//wsNXq03SCB.webp!large)
 
 消息的顺序需要由两个阶段保证：
 
@@ -419,7 +419,7 @@ RocketMQ 提供两种方式一起配合解决：
 
     下图是生产者发送顺序消息的封装，原理是发送消息时，实现 MessageQueueSelector 接口， **根据 Sharding Key 使用 Hash 取模法来**选择待发送的队列。
 
-    ![生产者顺序发送消息封装](https://cdn.learnku.com/uploads/images/202306/05/110388/zmZRavOqOB.webp!large)
+    ![生产者顺序发送消息封装](https://www.javayong.cn/pics/temp//zmZRavOqOB.webp!large)
 
 -   **消息消费**
 
@@ -429,7 +429,7 @@ RocketMQ 提供两种方式一起配合解决：
 
 最大的差别在于：**顺序消费会向 Borker 申请锁** 。消费者根据分配的队列 messageQueue ，向 Borker 申请锁 ，如果申请成功，则会拉取消息，如果失败，则定时任务每隔20秒会重新尝试。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/RYjgvNzqYU.webp!large)
+![](https://www.javayong.cn/pics/temp//RYjgvNzqYU.webp!large)
 
 顺序消费核心流程如下：
 
@@ -437,25 +437,25 @@ RocketMQ 提供两种方式一起配合解决：
 
 **2、 将请求对象提交到消费线程池**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/L0Fg8TEUfu.webp!large)
+![](https://www.javayong.cn/pics/temp//L0Fg8TEUfu.webp!large)
 
 和并发消费不同的是，这里的消费请求包含消费快照 processQueue ，消息队列 messageQueue 两个对象，并不对消息列表做任何处理。
 
 **3、 消费线程内，对消费队列加锁**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/BSgV66dvT9.webp!large)
+![](https://www.javayong.cn/pics/temp//BSgV66dvT9.webp!large)
 
 **顺序消费也是通过线程池消费的，synchronized 锁用来保证同一时刻对于同一个队列只有一个线程去消费它**
 
 **4、 从消费快照中取得待消费的消息列表**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/fw62aVv3ei.webp!large)
+![](https://www.javayong.cn/pics/temp//fw62aVv3ei.webp!large)
 
 消费快照 processQueue 对象里，创建了一个红黑树对象 consumingMsgOrderlyTreeMap 用于临时存储的待消费的消息。
 
 **5、 执行消息监听器**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/htlZQC5Egi.webp!large)
+![](https://www.javayong.cn/pics/temp//htlZQC5Egi.webp!large)
 
 消费快照的**消费锁 consumeLock** 的作用是：防止负载均衡线程把当前消费的 MessageQueue 对象移除掉。
 
@@ -463,7 +463,7 @@ RocketMQ 提供两种方式一起配合解决：
 
 消费成功时，首先计算需要提交的偏移量，然后更新本地消费进度。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/05kFcsIfVN.webp!large)
+![](https://www.javayong.cn/pics/temp//05kFcsIfVN.webp!large)
 
 消费失败时，分两种场景：
 
@@ -485,7 +485,7 @@ RocketMQ 消费者消费完一批数据后， 会将队列的进度保存在本�
 
 **1、 集群模式**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/lIlhh7LCc4.webp!large)
+![](https://www.javayong.cn/pics/temp//lIlhh7LCc4.webp!large)
 
 集群模式下，分两种场景：
 
@@ -495,13 +495,13 @@ RocketMQ 消费者消费完一批数据后， 会将队列的进度保存在本�
 
 Broker 的这两个处理器都调用消费者进度管理器 consumerOffsetManager 的 commitOffset 方法，定时任务异步将消费进度持久化到消费进度文件 consumerOffset.json 中。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/jpfI145dyQ.webp!large)
+![](https://www.javayong.cn/pics/temp//jpfI145dyQ.webp!large)
 
 **2、 广播模式**
 
 广播模式消费进度存储在消费者本地，定时任务每隔 5 秒通过 LocalFileOffsetStore 持久化到本地文件`offsets.json` ，数据格式为 `MessageQueue:Offset`。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/VDuc9BZwz3.webp!large)
+![](https://www.javayong.cn/pics/temp//VDuc9BZwz3.webp!large)
 
 广播模式下，消费进度和消费组没有关系，本地文件 `offsets.json` 存储在配置的目录，文件中包含订阅主题中所有的队列以及队列的消费进度。
 
@@ -524,11 +524,11 @@ Broker 端会为每个 topic 创建一个**重试队列** ，队列名称是：%
 | 7          | 5 分钟               | 15         | 1 小时               |
 | 8          | 6 分钟               | 16         | 2 小时               |
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/a4AW6Gxhxm.webp!large)
+![](https://www.javayong.cn/pics/temp//a4AW6Gxhxm.webp!large)
 
 开源 RocketMQ 4.X 支持延迟消息，默认支持18 个 level 的延迟消息，这是通过 broker 端的 messageDelayLevel 配置项确定的，如下：
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/JcmLurnXsq.webp!large)
+![](https://www.javayong.cn/pics/temp//JcmLurnXsq.webp!large)
 
 Broker 在启动时，内部会创建一个内部主题：SCHEDULE_TOPIC_XXXX，根据延迟 level 的个数，创建对应数量的队列，也就是说18个 level 对应了18个队列。
 
@@ -550,7 +550,7 @@ producer.send(msg);
 
 延迟消息在 RocketMQ Broker 端的流转如下图所示：
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/JLBtkWlUdG.webp!large)
+![](https://www.javayong.cn/pics/temp//JLBtkWlUdG.webp!large)
 
 **第一步：修改消息 Topic 名称和队列信息**
 
@@ -560,13 +560,13 @@ Broker 端接收到生产者的写入消息请求后，首先都会将消息写�
 
 同时，还会将消息原来要发送到的目标 Topic 和队列信息存储到消息的属性中。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/s4kZohhZun.webp!large)
+![](https://www.javayong.cn/pics/temp//s4kZohhZun.webp!large)
 
 **第二步：构建 consumequeue 文件时，计算并存储投递时间**
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/LgKhMaqAvc.webp!large)
+![](https://www.javayong.cn/pics/temp//LgKhMaqAvc.webp!large)
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/NfFXmlG1DS.webp!large)
+![](https://www.javayong.cn/pics/temp//NfFXmlG1DS.webp!large)
 
 上图是 consumequeue 文件一条消息的格式，最后 8 个字节存储 Tag 的哈希值，此时存储消息的投递时间。
 
@@ -576,7 +576,7 @@ ScheduleMessageService 类是一个定时调度服务，读取 SCHEDULE_TOPIC_XX
 
 定时调度服务启动时，创建一个定时调度线程池 ，并根据延迟级别的个数，启动对应数量的 HandlePutResultTask ，每个 HandlePutResultTask 负责一个延迟级别的消费与投递。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/ywsgDHPRc2.webp!large)
+![](https://www.javayong.cn/pics/temp//ywsgDHPRc2.webp!large)
 
 **第四步：投递时间到了，将消息数据重新写入到 commitlog**
 
@@ -592,7 +592,7 @@ Broker 端的后台服务线程会不停地分发请求并异步构建 consumequ
 
 Broker 端 SendMessageProcessor 处理器会调用 asyncConsumerSendMsgBack 方法。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/zdjbfFwN0S.webp!large)
+![](https://www.javayong.cn/pics/temp//zdjbfFwN0S.webp!large)
 
 首先判断消息的当前重试次数是否大于等于最大重试次数，如果达到最大重试次数，或者配置的重试级别小于0，则重新创建 Topic ，规则是 **%DLQ% + consumerGroup**，后续处理消息发送到死信队列。
 
@@ -600,7 +600,7 @@ Broker 端 SendMessageProcessor 处理器会调用 asyncConsumerSendMsgBack 方�
 
 当延时级别设置完成，刷新消息的重试次数为当前次数加 1 ，Broker 端将该消息刷盘，逻辑如下：
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/E3CYBrG5AY.webp!large)
+![](https://www.javayong.cn/pics/temp//E3CYBrG5AY.webp!large)
 
 延迟消息写入到 commitlog 里 ，这里其实和延迟消息机制的第一步类似，后面按照延迟消息机制的流程执行即可（第二步到第六步）。
 
@@ -608,7 +608,7 @@ Broker 端 SendMessageProcessor 处理器会调用 asyncConsumerSendMsgBack 方�
 
 下图展示了集群模式下消费者并发消费流程 ：
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/ASwgqxnuB7.webp!large)
+![](https://www.javayong.cn/pics/temp//ASwgqxnuB7.webp!large)
 
 核心流程如下：
 

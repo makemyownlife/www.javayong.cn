@@ -23,17 +23,17 @@ head:
 
 首先我们展示正确的订阅关系：多个 Group ID 订阅了多个 Topic，并且每个 Group ID 里的多个消费者的订阅关系保持了一致。
 
-![正确的订阅关系](https://cdn.learnku.com/uploads/images/202310/11/110388/5rMR9gIPHK.png!large)
+![正确的订阅关系](https://www.javayong.cn/pics/temp//5rMR9gIPHK.png)
 
 接下来，我们展示错误的订阅关系。
 
-![错误的订阅关系](https://cdn.learnku.com/uploads/images/202310/11/110388/YlPFIv5qG4.png!large)
+![错误的订阅关系](https://www.javayong.cn/pics/temp//YlPFIv5qG4.png)
 
 从上图中，单个 Group ID 订阅了多个 Topic，但是该 Group ID 里的多个消费者的订阅关系并没有保持一致。
 
 代码逻辑角度来看，**每个消费者实例内订阅方法的主题、 TAG、监听逻辑都需要保持一致**。
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/yXSu2AdWE0.png!large)
+![](https://www.javayong.cn/pics/temp//yXSu2AdWE0.png)
 
 接下来，我们实验相同消费组，两种不正确的场景，看看消费者和 Broker 服务有什么异常。
 
@@ -42,7 +42,7 @@ head:
 
 ## 2 订阅主题不同，标签相同
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/p149T2PspM.png!large)
+![](https://www.javayong.cn/pics/temp//p149T2PspM.png)
 
 当我们启动两个消费者后，消费者组名：`myconsumerGroup`。C1消费者订阅主题 `TopicTest` , C2消费者订阅主题 `mytest`。
 
@@ -84,7 +84,7 @@ Broker 服务会调用 `ClientManageProcessor` 的 `heartBeat`方法处理心跳
 
 最终跟踪到代码： `org.apache.rocketmq.broker.client.ConsumerManager#registerConsumer`
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/jeyu9ERNJh.png!large)
+![](https://www.javayong.cn/pics/temp//jeyu9ERNJh.png)
 
 Broker 服务的会保存消费者信息，消费者信息存储在消费者表 `consumerTable` 。消费者表以消费组名为 key , 值为消费者组信息 `ConsumerGroupInfo` 。
 
@@ -116,7 +116,7 @@ if (null == subscriptionData) {
 
 C1消费者无法消费主题 `TopicTest` 的消息数据，那么 C2 消费者订阅主题 `mytest`，消费会正常吗 ？
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/ayW5Bjyplu.png!large)
+![](https://www.javayong.cn/pics/temp//ayW5Bjyplu.png)
 
 从上图来看，依然有问题。 主题 mytest 有四个队列，但只有两个队列被分配了， 另外两个队列的消息就没有办法消费了。
 
@@ -132,13 +132,13 @@ C1消费者无法消费主题 `TopicTest` 的消息数据，那么 C2 消费者�
 
 (3) 先对 Topic 下的消息消费队列、消费者 Id 排序，然后用消息队列分配策略算法（默认为：消息队列的平均分配算法），计算出待拉取的消息队列；
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/iYLyVcUAt4.webp!large)
+![](https://www.javayong.cn/pics/temp//iYLyVcUAt4-20231117160818531.webp!large)
 
 这里的平均分配算法，类似于分页的算法，将所有 MessageQueue 排好序类似于记录，将所有消费端排好序类似页数，并求出每一页需要包含的平均 size 和每个页面记录的范围 range ，最后遍历整个 range 而计算出当前消费端应该分配到的记录。
 
 (4) 分配到的消息队列集合与 processQueueTable 做一个过滤比对操作。
 
-![](https://cdn.learnku.com/uploads/images/202306/05/110388/xs0dDuzfwc.webp!large)
+![](https://www.javayong.cn/pics/temp//xs0dDuzfwc-20231117160818528.webp!large)
 
 消费者实例内 ，processQueueTable 对象存储着当前负载均衡的队列 ，以及该队列的处理队列 processQueue (消费快照)。
 
@@ -154,7 +154,7 @@ C1消费者无法消费主题 `TopicTest` 的消息数据，那么 C2 消费者�
 
 通过上面的介绍 ，通过负载均衡的原理推导，原因就显而易见了。 
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/UFkBIMqRuE.png!large)
+![](https://www.javayong.cn/pics/temp//UFkBIMqRuE.png)
 
 C1消费者被分配了队列 0、队列 1 ，但是 C1消费者本身并没有订阅主题 mytest , 所以无法消费该主题的数据。
 
@@ -164,13 +164,13 @@ C1消费者被分配了队列 0、队列 1 ，但是 C1消费者本身并没有�
 
 ## 3 订阅主题相同，标签不同
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/MLEOohsjbL.png!large)
+![](https://www.javayong.cn/pics/temp//MLEOohsjbL.png)
 
 如图，C1 消费者和 C2 消费者订阅主题 `TopicTest` ，但两者的标签 TAG 并不相同。
 
 启动消费者服务之后，从控制台观察，负载均衡的效果也如预期一般正常。
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/kGvVrHStP7.png!large)
+![](https://www.javayong.cn/pics/temp//kGvVrHStP7.png)
 
 笔者在 Broker 端打印埋点日志，发现主题 `TopicTest` 的订阅信息为 ：
 
@@ -194,14 +194,14 @@ C1消费者被分配了队列 0、队列 1 ，但是 C1消费者本身并没有�
 
 首先 ConsumeQueue 文件的格式如下 ：
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/o4BiIVsDSs.webp!large)
+![](https://www.javayong.cn/pics/temp//o4BiIVsDSs-20231117160818552.webp!large)
 
 1. Broker 端在接收到拉取请求后，根据请求参数定位 ConsumeQueue 文件，然后遍历 ConsumeQueue 待检索的条目， 判断条目中存储 Tag 的 hashcode 是否和订阅信息中 TAG 的 hashcode 是否相同，若不符合，则跳过，继续对比下一个， 符合条件的聚合后返回给消费者客户端。
 2. 消费者在收到过滤后的消息后，也要执行过滤机制，只不过过滤的是 TAG 字符串的值，而不是 hashcode 。
 
 我们模拟下消息过滤的过程：
 
-![](https://cdn.learnku.com/uploads/images/202310/11/110388/aGylJz255T.png!large)
+![](https://www.javayong.cn/pics/temp//aGylJz255T.png)
 
 首先，生产者将不同的消息发送到 Broker 端，不同的 TAG 的消息会发送到保存的不同的队列中。 
 
@@ -219,7 +219,7 @@ C2 消费者从队列 2， 队列 3 中拉取消息，整个逻辑链路是正�
 
 - **合理定义好主题和标签**
 
-​ 当我们定义好主题和标签后，需要添加新的标签时，是否可以换一个思路：换一个新的消费组或者新建一个主题。
+ 当我们定义好主题和标签后，需要添加新的标签时，是否可以换一个思路：换一个新的消费组或者新建一个主题。
 
 - **严格规范上线流程**
 

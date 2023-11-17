@@ -17,7 +17,7 @@ RocketMQ 主从复制是 RocketMQ 高可用机制之一，数据可以从主节�
 
 这篇文章，我们聊聊 RocketMQ 的主从复制，希望大家读完之后，能够理解主从复制的精髓。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/NlcPeBacCl.png!large)
+![](https://www.javayong.cn/pics/temp//NlcPeBacCl.png)
 
 ## 1 同步与异步
 
@@ -25,13 +25,13 @@ RocketMQ 主从复制是 RocketMQ 高可用机制之一，数据可以从主节�
 
 每个 Broker 与 Name Server 集群中的所有节点建立长连接，定时注册 Topic 信息到所有 Name Server。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/XYRrSnhfuT.webp!large)
+![](https://www.javayong.cn/pics/temp//XYRrSnhfuT-20231117160830289.webp!large)
 
 Master 节点负责接收客户端的写入请求，并将消息持久化到磁盘上。而 Slave 节点则负责从 Master 节点复制消息数据，并保持与 Master 节点的同步。
 
 **1、同步复制**
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/9OihpRQCeY.webp!large)
+![](https://www.javayong.cn/pics/temp//9OihpRQCeY.webp!large)
 
 每个 Master 配置一个 Slave ，有多对 Master-Slave ，HA 采用同步双写方式，即只有主备都写成功，才向应用返回成功。
 
@@ -43,7 +43,7 @@ Master 节点负责接收客户端的写入请求，并将消息持久化到磁�
 
 **2、异步复制**
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/aeuWWwwVF6.webp!large)
+![](https://www.javayong.cn/pics/temp//aeuWWwwVF6.webp!large)
 
 每个 Master 配置一个 Slave ，有多对 Master-Slave ，HA 采用异步复制方式，主备有短暂消息延迟（毫秒级），这种模式的优缺点如下：
 
@@ -60,46 +60,46 @@ Master 节点负责接收客户端的写入请求，并将消息持久化到磁�
 
 Slave Broker 定时任务每隔 10 秒会同步元数据，包括**主题**，**消费进度**，**延迟消费进度**，**消费者配置**。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/UlZOjOQHKC.webp!large)
+![](https://www.javayong.cn/pics/temp//UlZOjOQHKC.webp!large)
 
 同步主题时, Slave Broker 向 Master Broker 发送 RPC 请求，返回数据后，首先加入本地缓存里，然后持久化到本地。
 
-![](https://javayong.cn/pics/rocketmq/同步rpc.webp)
+![](https://www.javayong.cn/pics/temp//%E5%90%8C%E6%AD%A5rpc.webp)
 
 ## 3 消息数据复制
 
 下图是 Master 和 Slave 消息数据同步的流程图。
 
-![](https://javayong.cn/pics/rocketmq/消息数据复制.webp)
+![](https://www.javayong.cn/pics/temp//%E6%B6%88%E6%81%AF%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6.webp)
 
 **1、Master 启动后监听指定端口；**
 
 Master 启动后创建 AcceptSocketService 服务  ,  用来创建客户端到服务端的 TCP 链接。
 
-![](https://javayong.cn/pics/rocketmq/master监听端口.webp)
+![](https://www.javayong.cn/pics/temp//master%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3.webp)
 
 RocketMQ 抽象了链接对象 HAConnection , HAConnection 会启动两个线程，分别用于读服务和写服务：
 
 - 读服务：处理 Slave 发送的请求 
 - 写服务：用于向 Slave 传输数据 
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/L9VeTg1Q1b.png!large)
+![](https://www.javayong.cn/pics/temp//L9VeTg1Q1b.png)
 
 **2、Slave 启动后，尝试连接 Master ，建立 TCP 连接；**
 
 HAClient 是客户端 Slave 的核心类 ，负责和 Master 创建连接和数据交互。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/FdlRK75VMA.webp!large)
+![](https://www.javayong.cn/pics/temp//FdlRK75VMA.webp!large)
 
 客户端在启动后，首先尝试连接 Master , 查询当前消息存储中最大的物理偏移量 ，并存储在变量 currentReportedOffset 里。
 
 **3、Slave 向 Master 汇报拉取消息偏移量；**
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/tT8zDrnRDf.webp!large)
+![](https://www.javayong.cn/pics/temp//tT8zDrnRDf.webp!large)
 
 上报进度的数据格式是一个 Long 类型的 Offset ,  8个字节 ,  非常简洁 。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/jTVTgyPKmh.webp!large)
+![](https://www.javayong.cn/pics/temp//jTVTgyPKmh.webp!large)
 
 发送到 Socket 缓冲区后 ,  修改最后一次的写时间 lastWriteTimestamp 。
 
@@ -107,29 +107,29 @@ HAClient 是客户端 Slave 的核心类 ，负责和 Master 创建连接和数�
 
 当 Slave 上报数据到 Master 时，**触发 SelectionKey.OP_READ 事件**，Master 将请求交由 ReadSocketService 服务处理：
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/Q1VaKEvY5a.webp!large)
+![](https://www.javayong.cn/pics/temp//Q1VaKEvY5a.webp!large)
 
 当 Slave Broker 传递了自身 commitlog 的 maxPhyOffset 时，Master 会马上中断 `selector.select(1000) `，执行 `processReadEvent` 方法。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/p6dZ2wKxCi.webp!large)
+![](https://www.javayong.cn/pics/temp//p6dZ2wKxCi.webp!large)
 
 processReadEvent 方法的核心逻辑是设置 Slave 的当前进度 offset ，然后通知复制线程当前的复制进度。 
 
 写服务 WriteSocketService 从消息文件中检索该偏移量后的所有消息（传输批次数据大小限制），并将消息数据发送给 Slave。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/V6JxwPbZYw.webp!large)
+![](https://www.javayong.cn/pics/temp//V6JxwPbZYw.webp!large)
 
 **5、Slave 接收到数据，将消息数据 append 到消息文件 commitlog 里 。**
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/zSWojrUdMO.webp!large)
+![](https://www.javayong.cn/pics/temp//zSWojrUdMO.webp!large)
 
 首先 HAClient 类中调用 dispatchReadRequest 方法 ， 解析出消息数据 ；
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/hso6cZvs8w.webp!large)
+![](https://www.javayong.cn/pics/temp//hso6cZvs8w.webp!large)
 
 然后将消息数据 append 到本地的消息存储。 
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/Lp9XW6snxn.webp!large)
+![](https://www.javayong.cn/pics/temp//Lp9XW6snxn.webp!large)
 
 ## 4 同步的实现
 
@@ -137,7 +137,7 @@ processReadEvent 方法的核心逻辑是设置 Slave 的当前进度 offset ，
 
 Master Broker 接收到写入消息的请求后 ，调用 Commitlog 的 aysncPutMessage 方法写入消息。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/sBPU66GFD1.webp!large)
+![](https://www.javayong.cn/pics/temp//sBPU66GFD1.webp!large)
 
 这段代码中，当 commitLog 执行完 appendMessage 后， 需要执行**刷盘任务**和**同步复制**两个任务。
 
@@ -145,7 +145,7 @@ Master Broker 接收到写入消息的请求后 ，调用 Commitlog 的 aysncPut
 
 当 HAConnection 读服务接收到 Slave 的进度反馈，发现消息数据复制成功，则唤醒 future 。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/uATvF8ZCew.webp!large)
+![](https://www.javayong.cn/pics/temp//uATvF8ZCew.webp!large)
 
 最后 Broker 组装响应命令 ，并将响应命令返回给客户端。
 

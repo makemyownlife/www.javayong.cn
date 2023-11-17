@@ -17,7 +17,7 @@ head:
 
 于是边查阅文档边实战，收获颇丰，写这篇文章，想和大家分享笔者学习的过程，一起品味Spring Cache设计之美。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/RK8gWPf7o2.webp!large)
+![](https://www.javayong.cn/pics/temp//RK8gWPf7o2.webp!large)
 
 ## 1 硬编码
 
@@ -72,7 +72,7 @@ head:
 
 首先需要明确一点：Spring Cache不是一个具体的缓存实现方案，而是一个对<font color='red'>缓存使用的抽象</font>(**Cache Abstraction**)。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/ZewikIryyK.webp!large)
+![](https://www.javayong.cn/pics/temp//ZewikIryyK.webp!large)
 
 ### 2.1 Spring AOP
 
@@ -85,7 +85,7 @@ Spring AOP是基于代理模式（**proxy-based**）。
  pojo.foo();
 ```
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/9PtqLGrXss.webp!large)
+![](https://www.javayong.cn/pics/temp//9PtqLGrXss.webp!large)
 
 将代码做一些调整，pojo对象的引用修改成代理类。
 
@@ -99,7 +99,7 @@ Pojo pojo = (Pojo) factory.getProxy();
 pojo.foo();
 ```
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/y2L0WUBAkn.webp!large)
+![](https://www.javayong.cn/pics/temp//y2L0WUBAkn.webp!large)
 
 调用pojo的foo方法的时候，实际上是动态生成的代理类调用foo方法。
 
@@ -140,7 +140,7 @@ public User getUserById(Long userId) {
 通常情况下，@Cacheable有一个属性key可以直接定义缓存key，开发者可以使用[SpEL](https://docs.spring.io/spring-framework/docs/4.3.x/spring-framework-reference/html/expressions.html)语言定义key值。
 
 若没有指定属性key，缓存抽象提供了 `KeyGenerator`来生成key ，默认的生成器代码见下图：
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/C4vvh1Bv7s.webp!large)
+![](https://www.javayong.cn/pics/temp//C4vvh1Bv7s.webp!large)
 
 它的算法也很容易理解：
 
@@ -216,7 +216,7 @@ public void deleteUserById(Long id) {
 
 Spring Cache是一个对<font color='red'>缓存使用的抽象</font>，它提供了多种存储集成。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/OjMqsOn5dA.webp!large)
+![](https://www.javayong.cn/pics/temp//OjMqsOn5dA.webp!large)
 
 要使用它们，需要简单地声明一个适当的`CacheManager` - 一个控制和管理`Cache`的实体。
 
@@ -235,19 +235,19 @@ public interface CacheManager {
 
 在CacheConfigurations配置类中，可以看到不同集成类型有不同的缓存配置类。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/vk9nmlzIbC.webp!large "Simple")
+![](https://www.javayong.cn/pics/temp//vk9nmlzIbC.webp!large "Simple")
 
 通过SpringBoot的自动装配机制，创建CacheManager的实现类`ConcurrentMapCacheManager`。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/GYJeXgi4Il.webp!large)
+![](https://www.javayong.cn/pics/temp//GYJeXgi4Il.webp!large)
 
 而`ConcurrentMapCacheManager`的getCache方法，会创建`ConcurrentCacheMap`。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/TTOwUF59LP.webp!large)
+![](https://www.javayong.cn/pics/temp//TTOwUF59LP.webp!large)
 
 `ConcurrentCacheMap`实现了`org.springframework.cache.Cache`接口。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/qd2d2wJdJz.webp!large)
+![](https://www.javayong.cn/pics/temp//qd2d2wJdJz.webp!large)
 
 从Spring Cache的**Simple**的实现，缓存配置需要实现两个接口：
 
@@ -259,7 +259,7 @@ public interface CacheManager {
 
 首先我们先创建一个工程spring-cache-demo。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/QOyVUVjie7.webp!large)
+![](https://www.javayong.cn/pics/temp//QOyVUVjie7.webp!large)
 
 caffeine和Redisson分别是本地内存和分布式缓存Redis框架中的佼佼者，我们分别演示如何集成它们。
 
@@ -379,7 +379,7 @@ CacheManager cacheManager(RedissonClient RedissonClient) {
 
 Controller层调用 getUserById方法，用户ID为1的时候，可以从Redis Desktop Manager里看到： 用户信息已被缓存，user_cache缓存存储是Hash数据结构。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/dWCrSBzXSc.webp!large)
+![](https://www.javayong.cn/pics/temp//dWCrSBzXSc.webp!large)
 
 因为Redisson默认的编解码是**FstCodec**， 可以看到key的名称是： \xF6\x01。
 
@@ -397,7 +397,7 @@ public RedissonClient Redisson() {
 
 再次调用 getUserById方法 ，控制台就变成：
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/Hh80EPVC0Z.webp!large)
+![](https://www.javayong.cn/pics/temp//Hh80EPVC0Z.webp!large)
 
 可以观察到：缓存key已经变成了：["java.lang.Long",1]，改变序列化后key和value已发生了变化。
 
@@ -419,7 +419,7 @@ public List<User> getUserList(List<Long> idList) {
 
 执行getUserList方法，参数id列表为：[1，3] 。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/mOd6M7BgeW.webp!large)
+![](https://www.javayong.cn/pics/temp//mOd6M7BgeW.webp!large)
 
 执行完成之后，控制台里可以看到：<font color='red'>列表整体直接被缓存起来</font>，用户列表缓存和用户条目缓存并**没有共享**，他们是平行的关系。
 
@@ -427,9 +427,9 @@ public List<User> getUserList(List<Long> idList) {
 
 类似这样的思考，很多开发者也向Spring Framework研发团队提过。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/UkXRc7g8O2.webp!large)
+![](https://www.javayong.cn/pics/temp//UkXRc7g8O2.webp!large)
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/XHUWdfuvUv.webp!large)
+![](https://www.javayong.cn/pics/temp//XHUWdfuvUv.webp!large)
 
 官方的回答也很明确：对于缓存抽象来讲，它并不关心方法返回的数据类型，假如是集合，那么也就意味着需要把集合数据在缓存中保存起来。
 
@@ -464,7 +464,7 @@ public List<User> getUserList(List<Long> idList) {
 
 进程内缓存做为一级缓存，分布式缓存做为二级缓存，首先从一级缓存中查询，若能查询到数据则直接返回，否则从二级缓存中查询，若二级缓存中可以查询到数据，则回填到一级缓存中，并返回数据。若二级缓存也查询不到，则从数据源中查询，将结果分别回填到一级缓存，二级缓存中。
 
-![来自《凤凰架构》缓存篇](https://cdn.learnku.com/uploads/images/202305/07/110388/6jIXNdJbHp.webp!large)
+![来自《凤凰架构》缓存篇](https://www.javayong.cn/pics/temp//6jIXNdJbHp.webp!large)
 
 Spring Cache并没有二级缓存的实现，我们可以实现一个简易的二级缓存DEMO，加深对技术的理解。
 
@@ -477,15 +477,15 @@ Spring Cache并没有二级缓存的实现，我们可以实现一个简易的�
 
 MultiLevelCacheManager是最核心的类，需要实现**getCache**和**getCacheNames**两个接口。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/MlFyK4WSiF.webp!large)
+![](https://www.javayong.cn/pics/temp//MlFyK4WSiF.webp!large)
 
 创建多级缓存，第一级缓存是：Caffeine , 第二级缓存是：Redisson。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/JoL5oTXi6y.webp!large)
+![](https://www.javayong.cn/pics/temp//JoL5oTXi6y.webp!large)
 
 二级缓存，为了快速完成DEMO，我们使用Redisson对Spring Cache的扩展类**RedissonCache** 。它的底层是**RMap**，底层存储是Hash。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/Z4dbRzEVOa.webp!large)
+![](https://www.javayong.cn/pics/temp//Z4dbRzEVOa.webp!large)
 
 我们重点看下缓存的「查询」和「存储」的方法：
 
@@ -530,7 +530,7 @@ public void put(Object key, Object value) {
 
 最后配置缓存管理器，原有的业务代码不变。
 
-![](https://cdn.learnku.com/uploads/images/202311/16/110388/6IEuaPkZ4h.webp!large)
+![](https://www.javayong.cn/pics/temp//6IEuaPkZ4h.webp!large)
 
 执行下getUserById方法，查询用户编号为1的用户信息。
 
@@ -577,4 +577,4 @@ public void put(Object key, Object value) {
 
 如果我的文章对你有所帮助，还请帮忙**点赞、在看、转发**一下，你的支持会激励我输出更高质量的文章，非常感谢！
 
-![](https://cdn.learnku.com/uploads/images/202304/06/110388/vBrZNjbMur.webp!large)
+![](https://www.javayong.cn/pics/temp//vBrZNjbMur.webp!large)
