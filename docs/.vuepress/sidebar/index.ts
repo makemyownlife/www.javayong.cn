@@ -48,7 +48,7 @@ export default sidebar({
         {
             text: "技术人生",
             icon: "life-ring",
-            prefix: "itlife",
+            prefix: "codelife",
             collapsible: true,
             children: [
                 
