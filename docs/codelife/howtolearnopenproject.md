@@ -6,10 +6,10 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 开源,Storm,clojure in Action,国家图书馆
+      content: 开源,RocketMQ,sharding-jdbc
   - - meta
     - name: description
-      content: 聊流式计算吧 , 那一段经历于我而言很精彩，很有趣，想把这段经历分享给大家。
+      content: 这篇文章，笔者聊聊自己的学习开源项目的心得，希望对你有所帮助。
 ---
 
 工作几年的程序员同学，有了一定的项目经验，对于编程也有了自己的理解，但他们偶尔也会感到困惑，不知道接下来该如何提升自己。
