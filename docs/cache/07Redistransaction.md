@@ -7,7 +7,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 布隆过滤器,缓存，Redis
+      content: Lua,缓存,Redis 事务,事务
   - - meta
     - name: description
       content: Redis 事务包含两种模式 事务模式 和 Lua 脚本。
