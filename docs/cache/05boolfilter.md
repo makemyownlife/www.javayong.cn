@@ -7,10 +7,10 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 布隆过滤器,缓存
+      content: 布隆过滤器,缓存,Bloom Filter
   - - meta
     - name: description
-      content: 对于后端程序员来讲，学习和理解布隆过滤器有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
+      content: 对于后端程序员来讲，学习和理解布隆过滤器(Bloom Filter)有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
 ---
 
 布隆过滤器是一个精巧而且经典的数据结构。
@@ -21,24 +21,24 @@ head:
 
 ![](https://www.javayong.cn/pics/temp//gGTKn38KyF.webp!large)
 
-# 1 缓存穿透
+## 1 缓存穿透
 
 我们先来看一个商品服务查询详情的接口：
 
 ```java
-public Product queryProductById (Long id){
-// 查询缓存
-Product product = queryFromCache(id);
-if(product != null) {
-return product ;
-}
-// 从数据库查询
-product = queryFromDataBase(id);
-if(product != null) {
-saveCache(id , product);
-}
-return product;
-}
+    public Product queryProductById(Long id) {
+       // 查询缓存
+        Product product = queryFromCache(id);
+        if (product != null) {
+            return product;
+        }
+        // 从数据库查询
+        product = queryFromDataBase(id);
+        if (product != null) {
+            saveCache(id, product);
+        }
+        return product;
+    }
 ```
 
 ![](https://www.javayong.cn/pics/temp//szzXnQVHGA.webp!large)
@@ -53,7 +53,7 @@ return product;
 
 我们的主角**布隆过滤器**出场了，它就能游刃有余的**平衡好时间和空间两种维度**。
 
-# 2 原理解析
+## 2 原理解析
 
 **布隆过滤器**（英语：Bloom Filter）是1970年由布隆提出的。它实际上是一个很长的**二进制向量**和一系列**随机映射函数**。
 
@@ -114,7 +114,7 @@ return product;
 
 Murmur3，FNV 系列和 Jenkins 等非密码学哈希函数适合，因为 Murmur3 算法简单，能够平衡好速度和随机分布，很多开源产品经常选用它作为哈希函数。
 
-# 3 Guava实现
+## 3 Guava实现
 
 Google Guava是 Google 开发和维护的开源 Java开发库，它包含许多基本的工具类，例如字符串处理、集合、并发工具、I/O和数学函数等等。
 
@@ -243,7 +243,7 @@ public <T extends @Nullable Object> boolean mightContain(
         }
 ```
 
-# 4 Redisson实现
+## 4 Redisson实现
 
 Redisson 是一个用 Java 编写的 Redis 客户端，它实现了分布式对象和服务，包括集合、映射、锁、队列等。Redisson的API简单易用，使得在分布式环境下使用Redis 更加容易和高效。
 
@@ -366,7 +366,7 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 
 通过 Redisson API 创建 key 为 `mybitset `的 位图 ，设置索引 3 ，5，6，8 位为 1 ，右侧的**二进制值**也完全匹配。
 
-# 5 实战要点
+## 5 实战要点
 
 通过 Guava 和 Redisson 创建和使用布隆过滤器比较简单，我们下面讨论实战层面的注意事项。
 
@@ -394,7 +394,7 @@ Redisson 布隆过滤器初始化的时候，会创建一个 Hash 数据结构�
 4. 商品服务根据布隆过滤器的映射，选择新的布隆过滤器 B进行相关的查询操作 ；
 5. 选择合适的时间点，删除旧的布隆过滤器 A。
 
-# 6 总结
+## 6 总结
 
 **布隆过滤器**是一个很长的**二进制向量**和一系列**随机映射函数**，用于**检索一个元素是否在一个集合中**。
 
