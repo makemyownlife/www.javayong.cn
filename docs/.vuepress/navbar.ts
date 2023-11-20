@@ -6,7 +6,7 @@ export default navbar([
     {text: "消息队列", icon: "Kafka", link: "/mq/rocketmq4/00RocketMQ4_introduce.html"},
    // {text: "分库分表", icon: "database", link: "/sharding/"},
     {
-        text: "程序人生", icon: "life-ring", link: "/codelife/",
+        text: "程序人生", icon: "life-ring", link: "/codelife/runningforcode.html",
     },
     {
         text: "B站视频",
