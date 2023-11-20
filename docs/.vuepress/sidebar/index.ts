@@ -51,7 +51,9 @@ export default sidebar({
             prefix: "codelife",
             collapsible: true,
             children: [
-                "runningforcode.md"
+                "runningforcode.md",
+                "messagequeuecareer.md",
+                "howtolearnopenproject.md",
             ]
         }
     ]
