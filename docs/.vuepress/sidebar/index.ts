@@ -54,6 +54,7 @@ export default sidebar({
                 "runningforcode.md",
                 "messagequeuecareer.md",
                 "howtolearnopenproject.md",
+                "guotuxuexistorm.md",
             ]
         }
     ]
