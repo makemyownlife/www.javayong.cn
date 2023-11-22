@@ -3,7 +3,6 @@ title: 聊聊本地缓存和分布式缓存
 category: cache
 tag:
   - cache 
-  - 分页
 head:
   - - meta
     - name: keywords

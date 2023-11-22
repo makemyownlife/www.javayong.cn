@@ -3,7 +3,6 @@ title: 四种强大的JDK本地缓存
 category: cache
 tag:
   - cache 
-  - 分页
 head:
   - - meta
     - name: keywords
