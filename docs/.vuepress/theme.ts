@@ -21,8 +21,9 @@ export default hopeTheme({
     url: "https://javayong.cn/article/",
   },
 
-  repo: "https://github.com/makemyownlife",
+  repo: "https://github.com/makemyownlife/www.javayong.cn",
   docsDir: "docs",
+  docsBranch: "master",
   pure: true,
   breadcrumb: false,
   navbar,
