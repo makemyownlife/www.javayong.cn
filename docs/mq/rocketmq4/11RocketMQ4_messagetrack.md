@@ -16,7 +16,7 @@ head:
 
 查询消息轨迹可作为生产环境中排查问题强有力的数据支持 ，也是研发同学解决线上问题的重要武器之一。
 
-# 1 基础概念
+## 1 基础概念
 
 消息轨迹是指一条消息从生产者发送到 Broker , 再到消费者消费，整个过程中的各个相关节点的时间、状态等数据汇聚而成的完整链路信息。
 
@@ -24,16 +24,16 @@ head:
 
 当我们需要查询消息轨迹时，需要明白一点：**消息轨迹数据是存储在 Broker 服务端，我们需要定义一个主题，在生产者，消费者端定义轨迹钩子**。
 
-# 2 开启轨迹
+## 2 开启轨迹
 
-## 2.1 修改 Broker 配置文件
+### 2.1 修改 Broker 配置文件
 
 ```properties
 # 开启消息轨迹
 traceTopicEnable=true
 ```
 
-## 2.2 生产者配置
+### 2.2 生产者配置
 
 ```java
 public DefaultMQProducer(final String producerGroup, boolean enableMsgTrace) 
@@ -89,7 +89,7 @@ public class Producer {
 
 从图中可以看到，消息轨迹中存储了消息的` 存储时间` 、` 存储服务器IP`  、`发送耗时` 。
 
-## 2.3 消费者配置
+### 2.3 消费者配置
 
 和生产者类似，消费者的构造函数可以传递轨迹参数：
 
@@ -124,7 +124,7 @@ public class Consumer {
 
 ![](https://javayong.cn/pics/rocketmq/consumertrack.png)
 
-# 3 实现原理
+## 3 实现原理
 
 轨迹的实现原理主要是在生产者发送、消费者消费时添加相关的钩子。 因此，我们只需要了解钩子的实现逻辑即可。
 
