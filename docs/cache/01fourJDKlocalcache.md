@@ -6,7 +6,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 本地缓存,JDK
+      content: 本地缓存,JDK,缓存
   - - meta
     - name: description
       content: 这篇文章，笔者想聊聊那些在业务系统中较少被使用，但却活跃于中间件或者框架里，强大却又低调的缓存，笔者愿称他们为缓存世界的扫地僧。

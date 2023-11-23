@@ -6,7 +6,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 本地缓存,分布式缓存,Guava Cache,ConcurrentHashMap,JDK,TreeMap,ByteBuffer
+      content: 本地缓存,分布式缓存,Guava Cache,ConcurrentHashMap,JDK,TreeMap,ByteBuffer,缓存
   - - meta
     - name: description
       content: 存的世界很广阔，对于**应用系统**来讲，我们经常将缓存划分为本地缓存和分布式缓存。
