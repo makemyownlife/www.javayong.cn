@@ -3,11 +3,11 @@ title: 品味Spring Cache设计之美
 category: cache
 tag:
   - cache 
-  - 分页
+  - Spring
 head:
   - - meta
     - name: keywords
-      content: Spring Cache,缓存
+      content: Spring Cache,缓存,Spring
   - - meta
     - name: description
       content: 写这篇文章，想和大家分享笔者学习的过程，一起品味Spring Cache设计之美。
