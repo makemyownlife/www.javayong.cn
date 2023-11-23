@@ -7,7 +7,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: Spring Cache,缓存,Spring
+      content: Spring Cache,缓存,Spring,设计
   - - meta
     - name: description
       content: 写这篇文章，想和大家分享笔者学习的过程，一起品味Spring Cache设计之美。
