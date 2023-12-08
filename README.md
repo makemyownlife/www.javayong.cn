@@ -8,6 +8,7 @@
 - [详解布隆过滤器](./docs/cache/05boolfilter.md)
 - [聊聊Redis事务](./docs/cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./docs/cache/09SpringCache.md)
+- [详解数据库连接池 Druid](./docs/cache/10DruidDataSource.md)
 
 ## 消息队列
 
