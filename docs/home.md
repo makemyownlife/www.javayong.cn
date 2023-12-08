@@ -10,6 +10,7 @@ title: 阅读目录
 - [详解布隆过滤器](./cache/05boolfilter.md)
 - [聊聊Redis事务](./cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./cache/09SpringCache.md)
+- [详解数据库连接池 Druid](./cache/10DruidDataSource.md)
 
 ## 消息队列
 
