@@ -6,7 +6,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 缓存,Druid,设计
+      content: 缓存,Druid,设计,连接池
   - - meta
     - name: description
       content: 再有人问你数据库连接池的原理，这篇文章甩给他！
