@@ -140,7 +140,7 @@ dataSource.close();
 
 首先我们查看数据源实现「**获取连接**」的接口截图，初始化可以**主动**和**被动**两种方式。
 
-主从是指显示的调用 init 方法，而
+**主从是指显示的调用 init 方法，而被动是指获取连接时才初始化。**
 
 ![](https://javayong.cn/pics/cache/druiddatasource.png)
 
