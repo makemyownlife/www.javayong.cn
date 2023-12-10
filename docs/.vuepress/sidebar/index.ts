@@ -15,7 +15,8 @@ export default sidebar({
                 "05boolfilter",
                 "07Redistransaction",
                 "09SpringCache",
-                "10DruidDataSource.md"
+                "10DruidDataSource.md",
+                "11CommonsPool2.md"
             ]
         },
         {

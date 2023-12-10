@@ -9,6 +9,7 @@
 - [聊聊Redis事务](./docs/cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./docs/cache/09SpringCache.md)
 - [详解数据库连接池 Druid](./docs/cache/10DruidDataSource.md)
+- [对象池化框架Commons Pool 2](./docs/cache/11CommonsPool2.md)
 
 ## 消息队列
 
