@@ -1,5 +1,5 @@
 ---
-title: 聊聊 Redis 事务
+title: Redis 事务模式和 Lua 脚本
 category: cache
 tag:
   - cache 
