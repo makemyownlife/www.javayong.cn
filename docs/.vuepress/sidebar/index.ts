@@ -16,7 +16,8 @@ export default sidebar({
                 "07Redistransaction",
                 "09SpringCache",
                 "10DruidDataSource.md",
-                "11CommonsPool2.md"
+                "11CommonsPool2.md",
+                "12howtodesigncachesdk.md"
             ]
         },
         {
