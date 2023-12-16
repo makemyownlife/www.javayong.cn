@@ -1,14 +1,13 @@
 推荐你通过在线阅读网站进行阅读，体验更好，速度更快！地址：[javayong.cn](https://javayong.cn/)。
 
-
 ## 缓存实战
-- [聊聊本地缓存和分布式缓存](./docs/cache/00localandclustercache.md)
+- [本地缓存VS分布式缓存](./docs/cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./docs/cache/01fourJDKlocalcache.md)
-- [聊聊分页列表缓存](./docs/cache/02pagelistcache.md)
-- [详解布隆过滤器](./docs/cache/05boolfilter.md)
+- [分页列表缓存](./docs/cache/02pagelistcache.md)
+- [布隆过滤器原理与实战](./docs/cache/05boolfilter.md)
 - [聊聊Redis事务](./docs/cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./docs/cache/09SpringCache.md)
-- [详解数据库连接池 Druid](./docs/cache/10DruidDataSource.md)
+- [数据库连接池Druid](./docs/cache/10DruidDataSource.md)
 - [对象池化框架Commons Pool 2](./docs/cache/11CommonsPool2.md)
 - [如何设计一个Redis客户端SDK](./docs/cache/12howtodesigncachesdk.md)
 

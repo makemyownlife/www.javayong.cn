@@ -7,7 +7,7 @@ title: 阅读目录
 - [本地缓存VS分布式缓存](./cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./cache/01fourJDKlocalcache.md)
 - [聊聊分页列表缓存](./cache/02pagelistcache.md)
-- [详解布隆过滤器](./cache/05boolfilter.md)
+- [布隆过滤器原理与实战](./cache/05boolfilter.md)
 - [聊聊Redis事务](./cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./cache/09SpringCache.md)
 - [详解数据库连接池Druid](./cache/10DruidDataSource.md)

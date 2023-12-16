@@ -1,5 +1,5 @@
 ---
-title: 详解布隆过滤器
+title: 布隆过滤器原理与实战
 category: cache
 tag:
   - cache 
@@ -7,7 +7,7 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 布隆过滤器,缓存,Bloom Filter
+      content: 布隆过滤器,缓存,Bloom Filter,原理,实战
   - - meta
     - name: description
       content: 对于后端程序员来讲，学习和理解布隆过滤器(Bloom Filter)有很大的必要性。来吧，我们一起品味布隆过滤器的设计之美。
