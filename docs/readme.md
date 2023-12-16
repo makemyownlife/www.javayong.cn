@@ -22,7 +22,7 @@ footer: |-
 
 - [追源码的平凡之路](./codelife/runningforcode.md)
 - [我与消息队列的八年情缘](./codelife/messagequeuecareer.md)
-- [聊聊如何学习开源项目](./codelife/howtolearnopenproject.md)
+- [如何学习开源项目](./codelife/howtolearnopenproject.md)
 
 ## 作品PDF
 

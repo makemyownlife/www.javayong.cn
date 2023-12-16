@@ -33,8 +33,8 @@ title: 阅读目录
 
 - [追源码的平凡之路](./codelife/runningforcode.md)
 - [我与消息队列的八年情缘](./codelife/messagequeuecareer.md)
-- [聊聊如何学习开源项目](./codelife/howtolearnopenproject.md)
-- [聊聊我与流式计算的故事](./codelife/guotuxuexistorm.md)
+- [如何学习开源项目](./codelife/howtolearnopenproject.md)
+- [重构艺龙流式计算服务](./codelife/guotuxuexistorm.md)
 
 ## 公众号
 
