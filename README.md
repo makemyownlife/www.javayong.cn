@@ -31,8 +31,8 @@
 
 - [追源码的平凡之路](./docs/codelife/runningforcode.md)
 - [我与消息队列的八年情缘](./docs/codelife/messagequeuecareer.md)
-- [聊聊如何学习开源项目](./docs/codelife/howtolearnopenproject.md)
-- [聊聊我与流式计算的故事](./docs/codelife/guotuxuexistorm.md)
+- [如何学习开源项目](./docs/codelife/howtolearnopenproject.md)
+- [艺龙流式计算服务重构](./docs/codelife/guotuxuexistorm.md)
 
 ## 公众号
 
