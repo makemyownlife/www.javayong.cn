@@ -1,5 +1,5 @@
 ---
-title: 详解数据库连接池 Druid
+title: 数据库连接池 Druid
 category: cache
 tag:
   - cache 
