@@ -1,5 +1,5 @@
 ---
-title: 聊聊如何学习开源项目
+title: 如何学习开源项目
 category: 技术人生
 tag:
   - opensource 
