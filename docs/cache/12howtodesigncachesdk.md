@@ -3,6 +3,7 @@ title: 如何设计一个Redis客户端SDK
 category: cache
 tag:
   - cache 
+  - Redis
 head:
   - - meta
     - name: keywords
