@@ -43,7 +43,8 @@ export default sidebar({
                         "08RocketMQ4_masterslave",
                         "10RocketMQ4_transaction",
                         "11RocketMQ4_messagetrack",
-                        "13RocketMQ4_subscribe_consistent"
+                        "13RocketMQ4_subscribe_consistent",
+                        "14RocketMQ4_mideng"
                     ],
                 }
             ]

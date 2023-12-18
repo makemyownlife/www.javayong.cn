@@ -29,6 +29,7 @@ title: 阅读目录
 - [RocketMQ事务原理](./mq/rocketmq4/10RocketMQ4_transaction.md)
 - [RocketMQ消息轨迹](./mq/rocketmq4/11RocketMQ4_messagetrack.md)
 - [RocketMQ订阅关系保证一致](./mq/rocketmq4/13RocketMQ4_subscribe_consistent.md)
+- [RocketMQ 消费幂等](./mq/rocketmq4/14RocketMQ4_mideng.md)
 
 ## 技术人生
 
