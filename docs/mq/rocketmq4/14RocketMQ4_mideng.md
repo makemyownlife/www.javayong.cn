@@ -16,7 +16,7 @@ head:
 
 ![](https://javayong.cn/pics/rocketmq/midengcategory.png?ab=1)
 
-## 1 基础概念
+## 1 幂等概念
 
 消费幂等是指：当出现 RocketMQ 消费者对某条消息重复消费的情况时，重复消费的结果与消费一次的结果是相同的，并且多次消费并未对业务系统产生任何负面影响。
 
