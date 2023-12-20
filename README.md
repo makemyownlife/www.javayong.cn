@@ -4,12 +4,14 @@
 - [本地缓存VS分布式缓存](./docs/cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./docs/cache/01fourJDKlocalcache.md)
 - [分页列表缓存](./docs/cache/02pagelistcache.md)
+- [深入剖析Guava Cache原理](./docs/cache/13GuavaCache.md)
 - [布隆过滤器原理与实战](./docs/cache/05boolfilter.md)
 - [聊聊Redis事务](./docs/cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./docs/cache/09SpringCache.md)
 - [数据库连接池Druid](./docs/cache/10DruidDataSource.md)
 - [对象池化框架Commons Pool 2](./docs/cache/11CommonsPool2.md)
 - [如何设计一个Redis客户端SDK](./docs/cache/12howtodesigncachesdk.md)
+- [深入剖析Guava Cache原理](./docs/cache/13GuavaCache.md)
 
 ## 消息队列
 
