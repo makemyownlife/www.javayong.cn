@@ -3,11 +3,11 @@ title: 深入剖析Guava Cache原理
 category: cache
 tag:
   - cache 
-  - 深入剖析Guava
+  - Guava
 head:
   - - meta
     - name: keywords
-      content: 缓存,Redis,Guava
+      content: 缓存,Redis,Guava,Guava Cache
   - - meta
     - name: description
       content: 深入剖析Guava Cache原理
