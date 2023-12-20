@@ -17,7 +17,8 @@ export default sidebar({
                 "09SpringCache",
                 "10DruidDataSource.md",
                 "11CommonsPool2.md",
-                "12howtodesigncachesdk.md"
+                "12howtodesigncachesdk.md",
+                "13GuavaCache.md"
             ]
         },
         {
