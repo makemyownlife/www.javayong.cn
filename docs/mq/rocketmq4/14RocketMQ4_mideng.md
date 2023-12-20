@@ -14,9 +14,9 @@ head:
 ---
 这篇文章，我们聊聊消息队列中非常重要的最佳实践之一：**消费幂等**。
 
-![](https://javayong.cn/pics/rocketmq/midengcategory.png?ab=1)
+![](https://javayong.cn/pics/rocketmq/midengcategory.png?abdc=2cd1)
 
-## 1 幂等概念
+## 1 基础概念
 
 消费幂等是指：当出现 RocketMQ 消费者对某条消息重复消费的情况时，重复消费的结果与消费一次的结果是相同的，并且多次消费并未对业务系统产生任何负面影响。
 
@@ -92,9 +92,7 @@ consumer.registerMessageListener(new MessageListenerConcurrently() {
 });
 ```
 
-## 4 幂等策略
-
-### 1 业务状态机判断
+## 4 业务逻辑判断
 
 为了保证幂等，一定要做**业务逻辑判断**，笔者认为这是保证幂等的**首要条件**。
 
@@ -114,9 +112,7 @@ consumer.registerMessageListener(new MessageListenerConcurrently() {
 
 此时，消费者需要判断当前的专车订单状态机，保存最合理的订单数据，就可以忽略旧的消息，打印相关日志即可。
 
-### 2 全局处理标识
-
-##### 1 数据库去重表
+## 5 数据库去重表
 
  数据库去重表有两个要点 ：
 
@@ -176,7 +172,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 }
 ```
 
-##### 2 Redis处理标志位
+## 6 Redis处理标志位
 
 在消费者接收到消息后，首先判断 Redis 中是否存在该业务主键的标志位，若存在标志位，则认为消费成功，否则，则执行业务逻辑，执行完成后，在缓存中添加标志位。
 
@@ -202,7 +198,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 }
 ```
 
-### 3 分布式锁
+## 7 数据库乐观锁
 
 仅仅有业务逻辑判断是不够的，为了应对并发场景，我们可以使用**分布式锁**。
 
@@ -211,8 +207,6 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 - 数据库乐观锁
 - 数据库悲观锁
 - Redis 锁
-
-##### 1 数据库乐观锁
 
 数据乐观锁假设认为数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测，如果发现冲突了，则让返回用户错误的信息，让用户决定如何去做。
 
@@ -264,7 +258,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 }
 ```
 
-##### 2 数据库悲观锁
+## 8 数据库悲观锁
 
 当我们要对一个数据库中的一条数据进行修改的时候，为了避免同时被其他人修改，最好的办法就是直接对该数据进行加锁以防止并发。
 
@@ -323,7 +317,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 }
 ```
 
-##### 3 Redis锁
+## 9 Redis锁
 
 使用数据库锁是非常重的一个操作，我们可以使用**更轻量级**的 Redis 锁来替换，因为 Redis 性能高，同时有非常丰富的生态（类库）支持不同类型的分布式锁。
 
@@ -349,7 +343,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 }
 ```
 
-## 5 总结
+## 10 总结
 
 这篇文章，我们详细剖析了如何实现 RocketMQ 消费幂等。
 
@@ -361,5 +355,7 @@ public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeCo
 
 **4、幂等策略**：业务逻辑代码中需要判断业务状态机，同时根据实际条件选择**全局处理标识**和**分布式锁**两种方式处理。
 
-![](https://javayong.cn/pics/rocketmq/midengcelue.png)
+笔者推荐的方案是：**Redis 分布式锁 + 业务逻辑判断**。
+
+
 
