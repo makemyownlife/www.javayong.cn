@@ -193,3 +193,9 @@ db0.t_order0, db0.t_order1, db1.t_order2, db1.t_order3, db1.t_order4
 ### 6 自增主键生成策略
 
 通过在客户端生成自增主键替换以数据库原生自增主键的方式，做到分布式主键无重复。
+
+---
+
+参考文档：
+
+> https://shardingsphere.apache.org/document/4.1.0/cn/features/sharding/
