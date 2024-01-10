@@ -1,5 +1,5 @@
 ---
-title: 核心概念
+title: shardingsphere 核心概念
 category: shardingsphere
 tag:
   - shardingsphere-jdbc 
@@ -7,25 +7,25 @@ tag:
 head:
   - - meta
     - name: keywords
-      content: 分库分表,shardingsphere,设计
+      content: 分库分表,shardingsphere,逻辑表,真实表,数据节点,绑定表,广播表,分片键,分片算法,分片规则
   - - meta
     - name: description
       content: 本小节主要介绍数据分片的核心概念，主要包括SQL核心概念、分片核心概念、配置核心概念
 ---
 ## 1 术语定义
-### 逻辑表
+### 1 逻辑表
 
 水平拆分的数据库（表）的相同逻辑和数据结构表的总称。例：订单数据根据主键尾数拆分为10张表，分别是`t_order_0`到`t_order_9`，他们的逻辑表名为`t_order`。
 
-### 真实表
+### 2 真实表
 
 在分片的数据库中真实存在的物理表。即上个示例中的`t_order_0`到`t_order_9`。
 
-### 数据节点
+### 3 数据节点
 
 数据分片的最小单元。由数据源名称和数据表组成，例：`ds_0.t_order_0`。
 
-### 绑定表
+### 4 绑定表
 
 指分片规则一致的主表和子表。例如：`t_order`表和`t_order_item`表，均按照`order_id`分片，则此两张表互为绑定表关系。绑定表之间的多表关联查询不会出现笛卡尔积关联，关联查询效率将大大提升。举例说明，如果SQL为：
 
@@ -55,7 +55,7 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 其中`t_order`在FROM的最左侧，ShardingSphere将会以它作为整个绑定表的主表。 所有路由计算将会只使用主表的策略，那么`t_order_item`表的分片计算将会使用`t_order`的条件。故绑定表之间的分区键要完全相同。
 
-###  广播表
+###  5 广播表
 
 指所有的分片数据源中都存在的表，表结构和表中的数据在每个数据库中均完全一致。适用于数据量不大且需要与海量数据的表进行关联查询的场景，例如：字典表。
 
@@ -63,11 +63,11 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 ## 2 分片概念
 
-### 分片键
+### 1 分片键
 
 用于分片的数据库字段，是将数据库(表)水平拆分的关键字段。例：将订单表中的订单主键的尾数取模分片，则订单主键为分片字段。 SQL中如果无分片字段，将执行全路由，性能较差。 除了对单分片字段的支持，ShardingSphere也支持根据多个字段进行分片。
 
-### 分片算法
+### 2 分片算法
 
 通过分片算法将数据分片，支持通过`=`、`>=`、`<=`、`>`、`<`、`BETWEEN`和`IN`分片。分片算法需要应用方开发者自行实现，可实现的灵活度非常高。
 
@@ -89,7 +89,7 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 对应HintShardingAlgorithm，用于处理使用Hint行分片的场景。需要配合HintShardingStrategy使用。
 
-### 分片策略
+### 3 分片策略
 
 包含分片键和分片算法，由于分片算法的独立性，将其独立抽离。真正可用于分片操作的是分片键 + 分片算法，也就是分片策略。目前提供5种分片策略。
 
@@ -113,7 +113,7 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 对应NoneShardingStrategy。不分片的策略。
 
-### SQL Hint
+### 4 SQL Hint
 
 对于分片字段非SQL决定，而由其他外置条件决定的场景，可使用SQL Hint灵活的注入分片字段。例：内部系统，按照员工登录主键分库，而数据库中并无此字段。SQL Hint支持通过Java API和SQL注释(待实现)两种方式使用。
 
@@ -121,19 +121,19 @@ SELECT i.* FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id WHERE
 
 ## 3 基础配置
 
-### 分片规则
+### 1 分片规则
 
 分片规则配置的总入口。包含数据源配置、表配置、绑定表配置以及读写分离配置等。
 
-### 数据源配置
+### 2 数据源配置
 
 真实数据源列表。
 
-### 表配置
+### 3 表配置
 
 逻辑表名称、数据节点与分表规则的配置。
 
-### 数据节点配置
+### 4 数据节点配置
 
 用于配置逻辑表与真实表的映射关系。可分为均匀分布和自定义分布两种形式。
 
@@ -176,7 +176,7 @@ db1
 db0.t_order0, db0.t_order1, db1.t_order2, db1.t_order3, db1.t_order4
 ```
 
-### 分片策略配置
+### 5 分片策略配置
 
 对于分片策略存有数据源分片策略和表分片策略两种维度。
 
@@ -190,6 +190,6 @@ db0.t_order0, db0.t_order1, db1.t_order2, db1.t_order3, db1.t_order4
 
 两种策略的API完全相同。
 
-### 自增主键生成策略
+### 6 自增主键生成策略
 
 通过在客户端生成自增主键替换以数据库原生自增主键的方式，做到分布式主键无重复。
