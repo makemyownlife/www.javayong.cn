@@ -58,7 +58,7 @@ export default sidebar({
             collapsible: true,
             children: [
                     {
-                        text: "shardingsphere-jdbc",
+                        text: "shardingsphere",
                         prefix: "shardingspherejdbc/",
                         collapsible: true,
                         icon: "JDBC",
