@@ -10,7 +10,7 @@ actions:
     link: /home/
     type: primary
   - text: 知识星球
-    link: 'https://public.zsxq.com/groups/15528815218812.html'
+    link: 'https://www.javayong.cn/codelife/zhishixingqiu.html'
     type: default
 footer: |-
           <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2023011240号-1</a> 

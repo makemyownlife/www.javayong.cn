@@ -81,6 +81,7 @@ export default sidebar({
                         "messagequeuecareer.md",
                         "howtolearnopenproject.md",
                         "guotuxuexistorm.md",
+                        "zhishixingqiu.md"
                     ]
          }
      ]
