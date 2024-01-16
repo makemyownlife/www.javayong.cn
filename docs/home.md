@@ -3,7 +3,7 @@ icon: creative
 title: 阅读目录
 ----------------------------
 
-## 缓存实战
+## 缓存实战篇
 - [本地缓存VS分布式缓存](./cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./cache/01fourJDKlocalcache.md)
 - [聊聊分页列表缓存](./cache/02pagelistcache.md)
@@ -15,7 +15,7 @@ title: 阅读目录
 - [对象池化框架Commons Pool 2](./cache/11CommonsPool2.md)
 - [如何设计一个Redis客户端SDK](./cache/12howtodesigncachesdk.md)
 
-## 消息队列
+## 消息队列篇
 
 ### RocketMQ4.X设计精要
 - [序言](./mq/rocketmq4/00RocketMQ4_introduce.md)
@@ -32,12 +32,20 @@ title: 阅读目录
 - [RocketMQ订阅关系保证一致](./mq/rocketmq4/13RocketMQ4_subscribe_consistent.md)
 - [RocketMQ 消费幂等](./mq/rocketmq4/14RocketMQ4_mideng.md)
 
+
+## 分库分表篇
+
+### ShardingSphere 
+- [shardingsphere 核心概念](./shardingspherejdbc/00coreconcept.md)
+- [shardingsphere 内核剖析](./shardingspherejdbc/01coreinsight.md)
+
 ## 技术人生
 
 - [追源码的平凡之路](./codelife/runningforcode.md)
 - [我与消息队列的八年情缘](./codelife/messagequeuecareer.md)
 - [如何学习开源项目](./codelife/howtolearnopenproject.md)
 - [重构艺龙流式计算服务](./codelife/guotuxuexistorm.md)
+- [开始搞知识星球了](./codelife/zhishixingqiu.md)
 
 ## 公众号
 
