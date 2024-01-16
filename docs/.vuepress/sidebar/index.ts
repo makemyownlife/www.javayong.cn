@@ -13,6 +13,7 @@ export default sidebar({
                 "01fourJDKlocalcache",
                 "02pagelistcache",
                 "13GuavaCache.md",
+                "04GuavaCacheAsyn.md",
                 "05boolfilter",
                 "07Redistransaction",
                 "09SpringCache",

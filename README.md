@@ -6,7 +6,7 @@
 - [本地缓存VS分布式缓存](./docs/cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./docs/cache/01fourJDKlocalcache.md)
 - [分页列表缓存](./docs/cache/02pagelistcache.md)
-- [深入剖析Guava Cache原理](./docs/cache/13GuavaCache.md)
+- [Guava Cache异步技巧](./docs/cache/04GuavaCacheAsyn.md)
 - [布隆过滤器原理与实战](./docs/cache/05boolfilter.md)
 - [聊聊Redis事务](./docs/cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./docs/cache/09SpringCache.md)
