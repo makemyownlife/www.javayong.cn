@@ -30,6 +30,12 @@
 - [RocketMQ订阅关系保证一致](./docs/mq/rocketmq4/13RocketMQ4_subscribe_consistent.md)
 - [RocketMQ 消费幂等](./docs/mq/rocketmq4/14RocketMQ4_mideng.md)
 
+## 分库分表篇
+
+### ShardingSphere 
+- [shardingsphere 核心概念](./docs/sharding//shardingspherejdbc/00coreconcept.md)
+- [shardingsphere 内核剖析](./docs/sharding/shardingspherejdbc/01coreinsight.md)
+
 ## 技术人生
 
 - [追源码的平凡之路](./docs/codelife/runningforcode.md)
