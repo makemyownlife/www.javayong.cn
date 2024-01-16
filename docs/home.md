@@ -8,6 +8,7 @@ title: 阅读目录
 - [四种强大的JDK本地缓存](./cache/01fourJDKlocalcache.md)
 - [聊聊分页列表缓存](./cache/02pagelistcache.md)
 - [深入剖析Guava Cache原理](./cache/13GuavaCache.md)
+- [Guava Cache异步刷新技巧](./cache/04GuavaCacheAsyn.md)
 - [布隆过滤器原理与实战](./cache/05boolfilter.md)
 - [聊聊Redis事务](./cache/07Redistransaction.md)
 - [品味SpringCache设计之美](./cache/09SpringCache.md)
