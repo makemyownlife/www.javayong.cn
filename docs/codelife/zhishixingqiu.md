@@ -1,12 +1,12 @@
 ---
-title: 知识星球
+title: 开始搞知识星球了
 category: 技术人生
 tag:
   - opensource 
 head: 
   - - meta
     - name: description
-      content: 我决定正式运营自己的知识星球 ：勇哥的Java训练营** ，一个直播、服务型的知识星球。
+      content: 我决定正式运营自己的知识星球 ：勇哥的Java训练营 ，一个直播、服务型的知识星球。
 ---
 
 大家好，我是勇哥。
@@ -19,11 +19,7 @@ head:
 
 ![](https://javayong.cn/pics/shipinhao/zhishixingqiushouye.png?a=1)
 
-当我还只是一个普通的初级工程师，不知道如何提升自己的技术水平，对未来也感到很迷惘。
-
-我尝试了很多不同的方法，走了很多的弯路，所以我特别能够理解刚进入 IT 行业的同学，他们有热情，强烈渴望成长，但一直找不到合适的成长路径。
-
-因为感同身受，所以我将星球的定位：提升初中级工程师的**技术认知**和**实战能力**。同时，我也希望成为你在架构师之路上的良师益友。
+星球的定位**：帮助工程师快速增强实战能力，提升技术认知**。
 
 ## 2 星球专栏
 
@@ -47,11 +43,11 @@ head:
 
 1、高并发场景下，使用本地缓存 JDK Map ，或者使用缓存框架提升接口性能 ；
 
-2、网络编程或者文件存储时使用字节缓冲区 ByteBuffer ；
+2、网络编程或者文件存储时，使用字节缓冲区 ByteBuffer ；
 
 3、抢红包场景，使用 Redisson 执行 Redis Lua 脚本 ；
 
-4、在中间件团队，如何优雅的封装一个 Java Redis SDK 。
+因此，我将非常实用的缓存技巧输出成独立的专栏，内容如下图：
 
 ![](https://javayong.cn/pics/shipinhao/cacheshizhan.png?a=1)
 
@@ -63,11 +59,11 @@ head:
 
 **2、自研 Java Redis SDK 工程**
 
-![](https://javayong.cn/pics/shipinhao/platformredis.png?a=1)
+![](https://javayong.cn/pics/shipinhao/platformredis.png)
 
 ### 1.2 消息队列篇
 
-消息队列是我非常喜欢的技术，在我的职业生涯里面，接触到了不同类型的消息队列，发生了很多有趣的故事 ：《我与消息队列的八年情缘》。
+消息队列是我非常喜欢的技术，在我的职业生涯里面，接触到了不同类型的消息队列，发生了很多有趣的故事 。
 
 因为我对 RocketMQ 更加熟悉点，所以 RocketMQ 是消息队列专栏的重点。
 
@@ -75,13 +71,13 @@ RocketMQ 4.X 是当前企业应用最广泛的产品， 而 RocketMQ 5.X 有更�
 
 ![](https://javayong.cn/pics/shipinhao/rocketmq4.png)
 
-同样为了提高学习效果，勇哥写了两个 RocketMQ 样例工程用于消息队列知识点教学。
+同样为了提高学习效果，勇哥写了两个样例工程用于消息队列知识点教学。
 
-**1、RocketMQ使用示例工程**
+**1、RocketMQ 使用示例工程**
 
 ![](https://javayong.cn/pics/shipinhao/rocketmqlearning.png)
 
-**2、模仿阿里云 ONS 封装 RocketMQ client 项目**
+**2、模仿阿里云 ONS 封装 RocketMQ client  SDK**
 
 ![](https://javayong.cn/pics/shipinhao/platformrocketmqclient.png)
 
@@ -166,9 +162,9 @@ RocketMQ 4.X 是当前企业应用最广泛的产品， 而 RocketMQ 5.X 有更�
 
 **如何加入星球？**
 
-**步骤1：添加我的微信（zhangyongtaozhe），备注星球**
+**步骤1：添加我的微信（zhangyongtaozhe）**
 
-<img src="https://javayong.cn/pics/shipinhao/weixinhao.png?a=221" style="zoom:50%;" />
+![](https://javayong.cn/pics/shipinhao/weixinhao.png)
 
 **步骤2：微信扫一扫星球优惠券**
 
@@ -178,4 +174,4 @@ RocketMQ 4.X 是当前企业应用最广泛的产品， 而 RocketMQ 5.X 有更�
 
 最后，介绍下我自己：
 
-勇哥，开源爱好者，曾就职于同程艺龙、神州优车、科大讯飞等公司，管理过后端业务线（30 人团队）， 也做过基础架构团队负责人，对高并发解决方案（缓存、消息队列、分库分表）有非常深刻的认知。
+勇哥，开源爱好者，曾服务于同程艺龙、神州优车、科大讯飞等公司，管理过后端业务线（30 人团队）， 也做过基础架构团队负责人，对高并发解决方案（缓存、消息队列、分库分表）有非常深刻的认知。
