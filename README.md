@@ -1,5 +1,7 @@
 推荐你通过在线阅读网站进行阅读，体验更好，速度更快！地址：[javayong.cn](https://javayong.cn/)。
 
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)
+
 ## 缓存实战
 - [本地缓存VS分布式缓存](./docs/cache/00localandclustercache.md)
 - [四种强大的JDK本地缓存](./docs/cache/01fourJDKlocalcache.md)

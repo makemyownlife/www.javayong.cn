@@ -215,3 +215,5 @@ ZREVRANGE 是 Redis 中用于有序集合（sorted set）的命令之一，它�
 这三种方式是一层一层递进的，要诀是：
 
 **细粒度的控制缓存**和**批量加载对象**。
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

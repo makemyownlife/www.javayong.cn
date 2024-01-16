@@ -162,3 +162,5 @@ Cobar 抽象了一个 NIOProcessor 类用来处理网络请求，每个处理器
 3、TreeMap 是一种基于红黑树的有序 Map 。TreeMap 在一致性哈希中可以用作节点/虚拟节点的存储结构，用来维护节点在哈希环上的位置和键的有序性。
 
 4、ByteBuffer 是字节缓冲区，主要用于用户读取和缓存字节数据，多用于网络编程、文件 IO 处理等。分库分表中间件 Cobar 在网络请求处理中，创建了缓冲池 BufferPool 用于池化 ByteBuffer ，从而大大提升系统的性能。
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

@@ -409,3 +409,6 @@ public String hellodanbiao() {
 参考资料：
 
 > Redis 集成简介：https://juejin.cn/post/7076244567569203208
+
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

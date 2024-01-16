@@ -421,3 +421,6 @@ Java 世界里 ，通过 Guava 和 Redisson 创建和使用布隆过滤器非常
 参考资料：
 
 > https://hackernoon.com/probabilistic-data-structures-bloom-filter-5374112a7832
+
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

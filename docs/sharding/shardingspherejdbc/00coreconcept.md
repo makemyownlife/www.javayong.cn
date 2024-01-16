@@ -199,3 +199,5 @@ db0.t_order0, db0.t_order1, db1.t_order2, db1.t_order3, db1.t_order4
 参考文档：
 
 > https://shardingsphere.apache.org/document/4.1.0/cn/features/sharding/
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

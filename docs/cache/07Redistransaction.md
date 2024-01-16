@@ -352,3 +352,4 @@ Lua 脚本是另一种形式的事务，他具备一定的原子性，但脚本�
 1. 为了避免 Redis 阻塞，Lua 脚本业务逻辑不能过于复杂和耗时；
 2. 仔细检查和测试 Lua 脚本 ，因为执行 Lua 脚本具备一定的原子性，不支持回滚。
 
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

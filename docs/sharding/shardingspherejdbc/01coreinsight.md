@@ -639,3 +639,5 @@ SELECT * FROM t_order WHERE id > 10000000 LIMIT 10;
 归并引擎的整体结构划分如下图。
 
 ![归并引擎结构](../../images/merge_architecture_cn.png)
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)

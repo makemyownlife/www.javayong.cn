@@ -149,3 +149,5 @@ void registerProcessor(
 亲爱的程序员朋友，当你不知道选择哪一个开源项目开始学习时，希望你**立足当下，行动起来**。当前技术团队使用的开源组件，正是你学习的方向。
 
 行动起来，你会变成更好的自己，加油。
+
+![](https://javayong.cn/pics/shipinhao/gongzhonghaonew.png)
