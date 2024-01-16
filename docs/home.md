@@ -37,8 +37,8 @@ title: 阅读目录
 ## 分库分表篇
 
 ### ShardingSphere 
-- [shardingsphere 核心概念](./shardingspherejdbc/00coreconcept.md)
-- [shardingsphere 内核剖析](./shardingspherejdbc/01coreinsight.md)
+- [shardingsphere 核心概念](./sharding/shardingspherejdbc/00coreconcept.md)
+- [shardingsphere 内核剖析](./sharding/shardingspherejdbc/01coreinsight.md)
 
 ## 技术人生
 
