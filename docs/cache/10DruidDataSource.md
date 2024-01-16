@@ -1,12 +1,12 @@
 ---
-title: 数据库连接池 Druid
+title: 数据库连接池Druid原理和最佳实践
 category: cache
 tag:
   - cache 
 head:
   - - meta
     - name: keywords
-      content: 缓存,Druid,设计,连接池
+      content: 缓存,Druid,设计,连接池,原理,最佳实践
   - - meta
     - name: description
       content: 再有人问你数据库连接池 Druid 的原理，这篇文章甩给他！
